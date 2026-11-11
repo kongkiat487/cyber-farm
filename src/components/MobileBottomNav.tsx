@@ -3,6 +3,7 @@
 import React from 'react';
 import { useFarm } from '../context/FarmContext';
 import {
+  Home,
   Store,
   Egg,
   Package,
@@ -36,7 +37,20 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] px-2 py-1.5 pb-safe">
       {role === 'CUSTOMER' ? (
         <div className="grid grid-cols-5 gap-1 items-center">
-          {/* 1. Live Gamecocks */}
+          {/* 1. Home / Overview */}
+          <button
+            onClick={() => onSelectNav('HOME')}
+            className={`flex flex-col items-center justify-center py-1 rounded-xl transition-all cursor-pointer ${
+              activeNav === 'HOME'
+                ? 'text-amber-600 font-black'
+                : 'text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <Home className={`w-5 h-5 transition-transform ${activeNav === 'HOME' ? 'scale-110 text-amber-600 stroke-[2.5]' : 'text-slate-500'}`} />
+            <span className="text-[10px] tracking-tight mt-0.5 font-bold">หน้าแรก</span>
+          </button>
+
+          {/* 2. Live Gamecocks */}
           <button
             onClick={() => onSelectNav('LIVE_COCKS')}
             className={`flex flex-col items-center justify-center py-1 rounded-xl transition-all cursor-pointer ${
@@ -51,7 +65,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             <span className="text-[10px] tracking-tight mt-0.5">ไก่ชน</span>
           </button>
 
-          {/* 2. Fertilized Eggs */}
+          {/* 3. Fertilized Eggs */}
           <button
             onClick={() => onSelectNav('EGGS')}
             className={`flex flex-col items-center justify-center py-1 rounded-xl transition-all cursor-pointer ${
@@ -66,7 +80,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             <span className="text-[10px] tracking-tight mt-0.5">ไข่เชื้อ</span>
           </button>
 
-          {/* 3. Supplies & Equipment */}
+          {/* 4. Supplies & Equipment */}
           <button
             onClick={() => onSelectNav('SUPPLIES')}
             className={`flex flex-col items-center justify-center py-1 rounded-xl transition-all cursor-pointer ${
@@ -75,17 +89,8 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
-            <Package className={`w-5 h-5 ${activeNav === 'SUPPLIES' ? 'text-amber-600' : 'text-slate-500'}`} />
+            <Package className={`w-5 h-5 ${activeNav === 'SUPPLIES' ? 'text-amber-600 stroke-[2.5]' : 'text-slate-500'}`} />
             <span className="text-[10px] tracking-tight mt-0.5">อุปกรณ์</span>
-          </button>
-
-          {/* 4. Logistics & Tracking */}
-          <button
-            onClick={onOpenTracking}
-            className="flex flex-col items-center justify-center py-1 text-slate-500 hover:text-slate-800 transition-all cursor-pointer"
-          >
-            <Truck className="w-5 h-5 text-slate-500" />
-            <span className="text-[10px] tracking-tight mt-0.5">ติดตามขนส่ง</span>
           </button>
 
           {/* 5. Cart with badge */}

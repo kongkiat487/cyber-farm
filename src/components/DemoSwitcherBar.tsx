@@ -82,6 +82,7 @@ export const DemoSwitcherBar: React.FC<DemoSwitcherBarProps> = ({
             onClick={() => {
               setRole('CUSTOMER');
               setViewMode('WEB');
+              if (activeNav.startsWith('ADMIN')) setActiveNav('HOME');
             }}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full font-bold transition-all cursor-pointer ${
               role === 'CUSTOMER' && viewMode === 'WEB'
@@ -103,6 +104,7 @@ export const DemoSwitcherBar: React.FC<DemoSwitcherBarProps> = ({
             onClick={() => {
               setRole('CUSTOMER');
               setViewMode('MOBILE');
+              if (activeNav.startsWith('ADMIN')) setActiveNav('HOME');
             }}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full font-bold transition-all cursor-pointer ${
               role === 'CUSTOMER' && viewMode === 'MOBILE'

@@ -18,6 +18,7 @@ import { AdminAnalytics } from '../components/AdminAnalytics';
 import { DemoSwitcherBar } from '../components/DemoSwitcherBar';
 import { PortalModal } from '../components/PortalModal';
 import { PortalLanding } from '../components/PortalLanding';
+import { StoreHomeView } from '../components/StoreHomeView';
 import {
   DeviceSimulatorBar,
   DeviceType,
@@ -36,7 +37,7 @@ import {
 function FarmStoreContent() {
   const { role, setRole, gamecocks, eggs, equipment } = useFarm();
 
-  const [activeNav, setActiveNav] = useState('LIVE_COCKS');
+  const [activeNav, setActiveNav] = useState('HOME');
   const [selectedGamecock, setSelectedGamecock] = useState<Gamecock | null>(null);
 
   // Demo Switcher State - Starts on PORTAL as requested
@@ -104,9 +105,11 @@ function FarmStoreContent() {
     if (system === 'WEB') {
       setRole('CUSTOMER');
       setViewMode('WEB');
+      setActiveNav('HOME');
     } else if (system === 'MOBILE') {
       setRole('CUSTOMER');
       setViewMode('MOBILE');
+      setActiveNav('HOME');
     } else if (system === 'BACKOFFICE') {
       setRole('ADMIN');
       setViewMode('WEB');
@@ -155,41 +158,37 @@ function FarmStoreContent() {
         {/* CUSTOMER STOREFRONT VIEW */}
         {role === 'CUSTOMER' && (
           <div className="space-y-4 sm:space-y-6">
-            {/* Hero Banner with Feature Highlights */}
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-r from-slate-950 via-slate-900 to-amber-950 text-white p-4 sm:p-8 shadow-xl border border-slate-800">
-              <div className="relative z-10 max-w-2xl space-y-2 sm:space-y-3">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-[10px] sm:text-xs font-bold">
-                  <Sparkles className="w-3 h-3 text-amber-400" /> แพลตฟอร์มไก่ชนพันธุ์แท้ มาตรฐานระดับประเทศ
-                </div>
-                <h2 className="text-xl sm:text-4xl font-black tracking-tight leading-snug">
-                  ยอดสายพันธุ์เงินล้าน <br />
-                  <span className="text-amber-400">ผังสายเลือด 3 รุ่น</span> รับรอง 100%
-                </h2>
-                <p className="text-[11px] sm:text-sm text-slate-300 leading-relaxed">
-                  เลือกชมคลิปเตะเป้า วางมัดจำจองคิว 30% ระบบแยกตะกร้าอัจฉริยะ (Smart Split Cart)
-                  พร้อมบริการจัดส่งด้วยรถตู้สัตว์เลี้ยงติดแอร์ดูแลตลอดทาง
-                </p>
+            {/* 1. HOME / OVERVIEW VIEW (รวมทุกส่วนไว้หน้าเดียวเป็นหน้าแรก) */}
+            {activeNav === 'HOME' && (
+              <StoreHomeView
+                gamecocks={gamecocks}
+                eggs={eggs}
+                equipment={equipment}
+                onSelectNav={nav => setActiveNav(nav)}
+                onViewGamecockDetails={c => setSelectedGamecock(c)}
+                onOpenTracking={() => setIsTrackingOpen(true)}
+              />
+            )}
 
-                <div className="flex flex-wrap gap-2 pt-1">
-                  <button
-                    onClick={() => setActiveNav('LIVE_COCKS')}
-                    className="py-1.5 px-3.5 sm:py-2 sm:px-4 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-xl text-xs flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
-                  >
-                    ชมไก่ชนพร้อมขาย <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    onClick={() => setActiveNav('EGGS')}
-                    className="py-1.5 px-3.5 sm:py-2 sm:px-4 bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-white font-bold rounded-xl text-xs transition-colors cursor-pointer"
-                  >
-                    จองไข่เชื้อรับประกัน
-                  </button>
+            {/* Back to Home Shortcut Bar when inside category */}
+            {activeNav !== 'HOME' && (
+              <div className="flex items-center justify-between pb-1">
+                <button
+                  onClick={() => setActiveNav('HOME')}
+                  className="flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-amber-600 bg-white hover:bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-xl transition-all cursor-pointer shadow-xs"
+                >
+                  <span>← กลับหน้าหลัก (Home)</span>
+                </button>
+                <div className="flex items-center gap-1 text-[11px] font-bold text-slate-500">
+                  <span>กำลังดูหมวด:</span>
+                  <span className="text-amber-700 font-black">
+                    {activeNav === 'LIVE_COCKS' && '🐓 ไก่ชนมีชีวิต'}
+                    {activeNav === 'EGGS' && '🥚 ไข่เชื้อพร้อมเพาะ'}
+                    {activeNav === 'SUPPLIES' && '💊 อุปกรณ์ & เวชภัณฑ์'}
+                  </span>
                 </div>
               </div>
-
-              <div className="absolute right-0 bottom-0 top-0 w-1/2 opacity-15 pointer-events-none hidden md:flex items-center justify-center font-black text-9xl text-amber-400/30 select-none">
-                🐓
-              </div>
-            </div>
+            )}
 
             {/* Smart Search & Filter Section (TOR 3.4) */}
             {activeNav === 'LIVE_COCKS' && (

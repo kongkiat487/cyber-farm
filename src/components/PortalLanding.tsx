@@ -30,12 +30,12 @@ export const PortalLanding: React.FC<PortalLandingProps> = ({ onSelectSystem }) 
       title: 'เว็บหน้าร้านลูกค้า (Web Storefront)',
       badge: 'Desktop View',
       badgeColor: 'bg-sky-100 text-sky-800 border-sky-300',
-      tagline: 'ระบบแคตตาล็อกไก่ชน ผังสายเลือด 3 รุ่น และตะกร้าแยกบิล',
+      tagline: 'หน้าแรกศูนย์รวมทุกหมวดหมู่, ผังสายเลือด 3 รุ่น และตะกร้าแยกบิล',
       icon: <Monitor className="w-7 h-7 text-sky-600" />,
       features: [
-        'เลือกชมไก่ชน, กรองสายพันธุ์, สไตล์เชิงชน และช่วงราคา',
+        'หน้าหลักรวมไฮไลต์ไก่ชน, ไข่เชื้อเงินล้าน และเวชภัณฑ์ในหน้าเดียว',
         'ผังสายเลือด 3 รุ่น (Pedigree Tree) คลิกดูคลิปพ่อ-แม่พันธุ์',
-        'ระบบซื้อไข่เชื้อแบบ Tier (1, 3, 5 ฟอง) พร้อมประกัน',
+        'ระบบซื้อไข่เชื้อแบบ Tier (1, 3, 5 ฟอง) พร้อมประกันเคลม',
         'Smart Split Cart แยกบิลรถตู้สัตว์เลี้ยง vs พัสดุอัตโนมัติ'
       ],
       btnText: 'เข้าสู่หน้าร้าน Desktop',

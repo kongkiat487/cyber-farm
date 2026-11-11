@@ -89,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 pt-7 pb-2.5 sm:pt-3 sm:pb-3 flex items-center justify-between gap-2">
         {/* Brand Logo */}
         <div
-          onClick={() => onSelectNav(role === 'CUSTOMER' ? 'LIVE_COCKS' : 'ADMIN_KANBAN')}
+          onClick={() => onSelectNav(role === 'CUSTOMER' ? 'HOME' : 'ADMIN_KANBAN')}
           className="flex items-center gap-2 cursor-pointer select-none shrink-0"
         >
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center shadow-md shadow-amber-500/20 text-white font-black text-base sm:text-xl">
@@ -108,6 +108,16 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Desktop Navigation Links (Hidden on mobile - moved to bottom tab bar) */}
         {role === 'CUSTOMER' ? (
           <nav className="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-2xl">
+            <button
+              onClick={() => onSelectNav('HOME')}
+              className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                activeNav === 'HOME'
+                  ? 'bg-white text-slate-900 shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              🏠 หน้าแรก
+            </button>
             <button
               onClick={() => onSelectNav('LIVE_COCKS')}
               className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
