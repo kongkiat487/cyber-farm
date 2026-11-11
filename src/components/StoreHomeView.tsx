@@ -405,3 +405,4 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
     </div>
   );
 };
+
