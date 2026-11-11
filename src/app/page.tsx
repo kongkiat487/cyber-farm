@@ -39,6 +39,7 @@ function FarmStoreContent() {
 
   const [activeNav, setActiveNav] = useState('HOME');
   const [selectedGamecock, setSelectedGamecock] = useState<Gamecock | null>(null);
+  const [detailModalTab, setDetailModalTab] = useState<'OVERVIEW' | 'PEDIGREE' | 'VIDEO'>('OVERVIEW');
 
   // Demo Switcher State - Starts on PORTAL as requested
   const [viewMode, setViewMode] = useState<'PORTAL' | 'WEB' | 'MOBILE'>('PORTAL');
@@ -165,7 +166,10 @@ function FarmStoreContent() {
                 eggs={eggs}
                 equipment={equipment}
                 onSelectNav={nav => setActiveNav(nav)}
-                onViewGamecockDetails={c => setSelectedGamecock(c)}
+                onViewGamecockDetails={(c, tab) => {
+                  setSelectedGamecock(c);
+                  setDetailModalTab(tab || 'OVERVIEW');
+                }}
                 onOpenTracking={() => setIsTrackingOpen(true)}
               />
             )}
@@ -496,6 +500,7 @@ function FarmStoreContent() {
       {/* Modals & Drawers */}
       <DetailModal
         gamecock={selectedGamecock}
+        initialTab={detailModalTab}
         onClose={() => setSelectedGamecock(null)}
       />
 

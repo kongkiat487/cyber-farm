@@ -27,7 +27,7 @@ interface StoreHomeViewProps {
   eggs: FertilizedEgg[];
   equipment: SupplyEquipment[];
   onSelectNav: (nav: string) => void;
-  onViewGamecockDetails: (gamecock: Gamecock) => void;
+  onViewGamecockDetails: (gamecock: Gamecock, tab?: 'OVERVIEW' | 'PEDIGREE' | 'VIDEO') => void;
   onOpenTracking: () => void;
 }
 
@@ -105,13 +105,13 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
           <span className="text-[11px] text-slate-400">เลือกดูสินค้าตามประเภท</span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3">
           {/* Card 1: Live Cocks */}
           <div
             onClick={() => onSelectNav('LIVE_COCKS')}
-            className="group bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
+            className="group bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
           >
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-1.5">
               <span className="text-2xl sm:text-3xl group-hover:scale-110 transition-transform">🐓</span>
               <span className="text-[10px] font-black bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">
                 {gamecocks.length} ตัว
@@ -122,7 +122,7 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
                 ไก่ชนมีชีวิต
               </h4>
               <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 line-clamp-1">
-                คลิปเตะเป้า + ผังสายเลือด 3 รุ่น
+                คลิปเตะเป้า + สายเลือด
               </p>
             </div>
           </div>
@@ -130,9 +130,9 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
           {/* Card 2: Eggs */}
           <div
             onClick={() => onSelectNav('EGGS')}
-            className="group bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
+            className="group bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
           >
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-1.5">
               <span className="text-2xl sm:text-3xl group-hover:scale-110 transition-transform">🥚</span>
               <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
                 {eggs.length} คู่ผสม
@@ -143,7 +143,7 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
                 ไข่เชื้อพร้อมเพาะ
               </h4>
               <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 line-clamp-1">
-                ราคา Tier 1/3/5 ฟอง + รับประกันแตก
+                ราคา Tier 1/3/5 ฟอง
               </p>
             </div>
           </div>
@@ -151,9 +151,9 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
           {/* Card 3: Supplies */}
           <div
             onClick={() => onSelectNav('SUPPLIES')}
-            className="group bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
+            className="group bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
           >
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-1.5">
               <span className="text-2xl sm:text-3xl group-hover:scale-110 transition-transform">💊</span>
               <span className="text-[10px] font-black bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">
                 {equipment.length} รายการ
@@ -164,28 +164,49 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
                 อุปกรณ์ & เวชภัณฑ์
               </h4>
               <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 line-clamp-1">
-                ยาบำรุง, วัคซีน และนวมซ้อม
+                ยาบำรุง, วัคซีน, นวม
               </p>
             </div>
           </div>
 
-          {/* Card 4: Van Tracking */}
+          {/* Card 4: Pedigree Tree Shortcut */}
           <div
-            onClick={onOpenTracking}
-            className="group bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
+            onClick={() => gamecocks[0] && onViewGamecockDetails(gamecocks[0], 'PEDIGREE')}
+            className="group bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between ring-1 ring-amber-300/40"
           >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-2xl sm:text-3xl group-hover:scale-110 transition-transform">🚐</span>
-              <span className="text-[10px] font-black bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">
-                ระบบขนส่ง
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-2xl sm:text-3xl group-hover:scale-110 transition-transform">🌳</span>
+              <span className="text-[10px] font-black bg-amber-500 text-slate-950 px-2 py-0.5 rounded-full shadow-xs">
+                เส้นโยง 3 รุ่น
               </span>
             </div>
             <div>
               <h4 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-amber-600 transition-colors">
-                ติดตามรถตู้สัตว์เลี้ยง
+                ผังสายเลือด
+              </h4>
+              <p className="text-[10px] sm:text-[11px] text-amber-700 font-medium mt-0.5 line-clamp-1">
+                เช็คบรรพบุรุษ 3 ชั่วโคตร
+              </p>
+            </div>
+          </div>
+
+          {/* Card 5: Van Tracking */}
+          <div
+            onClick={onOpenTracking}
+            className="group bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
+          >
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-2xl sm:text-3xl group-hover:scale-110 transition-transform">🚐</span>
+              <span className="text-[10px] font-black bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">
+                รถตู้สัตว์เลี้ยง
+              </span>
+            </div>
+            <div>
+              <h4 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-amber-600 transition-colors">
+                ติดตามขนส่ง
               </h4>
               <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 line-clamp-1">
-                เช็คสถานะและเบอร์คนขับแบบสด
+                เช็คสถานะและเบอร์คนขับ
               </p>
             </div>
           </div>

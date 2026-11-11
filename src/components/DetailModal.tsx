@@ -21,13 +21,20 @@ import { useFarm } from '../context/FarmContext';
 
 interface DetailModalProps {
   gamecock: Gamecock | null;
+  initialTab?: 'OVERVIEW' | 'PEDIGREE' | 'VIDEO';
   onClose: () => void;
 }
 
-export const DetailModal: React.FC<DetailModalProps> = ({ gamecock, onClose }) => {
+export const DetailModal: React.FC<DetailModalProps> = ({ gamecock, initialTab = 'OVERVIEW', onClose }) => {
   const { addToCart, cart } = useFarm();
   const [activeImage, setActiveImage] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'PEDIGREE' | 'VIDEO'>('OVERVIEW');
+  const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'PEDIGREE' | 'VIDEO'>(initialTab);
+
+  React.useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab, gamecock]);
   const [depositMode, setDepositMode] = useState<boolean>(false);
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
