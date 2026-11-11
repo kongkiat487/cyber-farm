@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cyber Farm - ระบบบริหารจัดการและซื้อ-ขายไก่ชนออนไลน์
+> **Gamecock Farm & E-Commerce Platform (Demo Web Application)**
+> พัฒนาตามข้อกำหนดขอบเขตของงาน (**TOR**) ฉบับสมบูรณ์
 
-## Getting Started
+---
 
-First, run the development server:
+## 🌟 ฟีเจอร์หลักของระบบตาม TOR
 
+### 1. ระบบจัดการสินค้าและผังสายเลือด (Product & Pedigree Management)
+- **🐓 ไก่ชนมีชีวิต (Live Gamecock):**
+  - แสดงรหัสไก่, สายพันธุ์, อายุ, น้ำหนัก, สถิติไฟต์ชนะ, ลีลาเชิงชน
+  - ป้ายกำกับพิเศษ: `ดาวรุ่ง`, `แชมป์เปี้ยน`, `ไก่หนุ่มคัดผ่าน`, `พ่อพันธุ์หลัก`
+  - สถานะสินค้า: `พร้อมขาย`, `ติดจอง (มัดจำแล้ว)`, `ขายแล้ว`, `พ่อพันธุ์หลัก`
+- **🌳 ผังสายเลือด 3 รุ่นแบบโต้ตอบ (Interactive Pedigree Tree):**
+  - แสดงแผนผังครอบครัวย้อนหลัง 3 รุ่น (รุ่นพ่อ-แม่, ปู่-ย่า, ตา-ยาย)
+  - คลิกที่ตัวพ่อพันธุ์/แม่พันธุ์ เพื่อเปิดดูประวัติ สถิติการชนะ และคลิปวิดีโอโชว์เบอร์แข้ง
+- **🥚 โมดูลไข่เชื้อ (Fertilized Egg):**
+  - ระบบตั้งราคาแบบขั้นบันได (Tier Pricing): 1 ฟอง, เซ็ต 3 ฟอง, เซ็ต 5 ฟอง
+  - ระบบโควตารายสัปดาห์ (Weekly Quota Progress Bar)
+  - ระบบบังคับยอมรับเงื่อนไขการรับประกัน (Warranty Checkbox) ก่อนกดสั่งซื้อ
+- **🎬 ระบบมัลติมีเดีย & ลายน้ำ (Media & Watermark):**
+  - ฝังคลิปวิดีโอเตะเป้าและคลิปชนจริง (YouTube/TikTok embed)
+  - ป้ายประทับลายน้ำรับรองอัตโนมัติ (Auto-Watermark Badge) บนรูปภาพสินค้า
+
+### 2. ระบบสั่งซื้อ ชำระเงิน และการจองมัดจำ (Smart Cart & Checkout)
+- **🛒 Smart Split Cart (ระบบแยกตะกร้าสินค้าอัจฉริยะ):**
+  - แยกบิลและการคิดค่าจัดส่งระหว่าง **"ไก่มีชีวิต"** (จัดส่งผ่านรถตู้สัตว์เลี้ยง/รถทัวร์ติดแอร์) และ **"ไข่เชื้อ/อุปกรณ์"** (พัสดุกันกระแทก) อัตโนมัติ
+- **⏱️ ระบบวางมัดจำและจองคิว (Deposit & Timeout):**
+  - วางมัดจำ 30% ล็อกสถานะไก่เป็น "ติดจอง" พร้อมตัวจับเวลานับถอยหลัง 48 ชั่วโมง
+- **💳 แจ้งชำระเงิน:**
+  - สแกน QR PromptPay พร้อมฟอร์มอัปโหลดสลิปโอนเงิน (Image Preview)
+
+### 3. ระบบติดตามสถานะและการจัดส่ง (Logistics & Tracking)
+- **🚚 ขนส่งไก่มีชีวิต:** แสดงชื่อคนขับรถตู้, เบอร์โทรศัพท์ติดต่อ, ป้ายทะเบียนรถ และจุดนัดรับ
+- **📦 ขนส่งพัสดุ:** แสดงเลขพัสดุ (Tracking Number) พร้อมสถานะการจัดส่ง
+- ค้นหาสถานะได้ง่ายด้วยรหัสคำสั่งซื้อหรือเบอร์โทรศัพท์
+
+### 4. ระบบจัดการหลังบ้านสำหรับเจ้าของฟาร์ม (Admin Dashboard)
+- **📋 Order Kanban Board:**
+  - ลาก/เปลี่ยนสถานะคำสั่งซื้อ 4 ขั้นตอน: `รอยืนยันสลิป` ➔ `รอจัดส่ง` ➔ `จัดส่งแล้ว` ➔ `สำเร็จ`
+  - ตรวจสอบสลิปและกดยืนยัน/ปฏิเสธ
+  - แบบฟอร์มอัปเดตข้อมูลคนขับรถตู้และเลขพัสดุ
+- **📦 ระบบจัดการสต๊อกสินค้า & แจ้งเตือน:**
+  - ปรับปรุงสต๊อกเวชภัณฑ์ พร้อมป้ายเตือนอัตโนมัติเมื่อสต๊อกต่ำกว่าเกณฑ์ขั้นต่ำ
+- **📊 รายงานเชิงวิเคราะห์ (Data Analytics):**
+  - สัดส่วนยอดขายแยกประเภท (ไก่ตัว vs ไข่เชื้อ vs เวชภัณฑ์)
+  - สถิติสายพันธุ์ยอดนิยม
+  - อันดับพ่อ-แม่พันธุ์ทำเงินสูงสุดของฟาร์ม
+
+---
+
+## 💻 Tech Stack
+- **Framework:** Next.js 16+ (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Icons:** Lucide React
+- **Data Store:** React Context + LocalStorage Persistence (Mock Backend)
+
+---
+
+## 🚀 วิธีการรันโปรเจกต์ (How to Run)
+
+1. ติดตั้ง Dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. รันโหมด Development:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. เปิดเบราว์เซอร์ไปที่:
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> **Tip สำหรับการทดสอบ (Demo Switcher):**  
+> สามารถกดสลับระหว่างมุมมอง **"ลูกค้า (Storefront)"** และ **"แอดมิน (Admin)"** ได้ทันทีที่แถบด้านบนของหน้าจอ พร้อมปุ่ม **"รีเซ็ตข้อมูล"** หากต้องการเริ่มข้อมูลตัวอย่างใหม่
