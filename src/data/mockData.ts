@@ -19,11 +19,11 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
     price: 35000,
     status: 'AVAILABLE',
     tags: ['ดาวรุ่ง', 'แชมป์เปี้ยน', 'ไก่หนุ่มคัดผ่าน'],
-    imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Gamecock.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1612170153139-6f881ff067e0?auto=format&fit=crop&w=800&q=80'
+      'https://upload.wikimedia.org/wikipedia/commons/4/44/Gamecock.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/f/f7/Pumpkin_Hulsey_Gamefowl_2.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/4/41/Fighting_cock_in_Mindanao_04.jpg'
     ],
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Demo sparring clip
     depositPercentage: 30,
@@ -36,7 +36,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         breed: 'พม่ารำวงแท้',
         wins: 6,
         earnings: '1,200,000 บาท',
-        imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Fighting_cock_in_Mindanao_04.jpg',
         videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
         note: 'จ่ายลูกเก่ง เบอร์แข้งระดับแถวหน้าของประเทศ'
       },
@@ -46,7 +46,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         code: 'DAM-042',
         role: 'MOTHER',
         breed: 'สายเลือดกวนอู+เยียร์อยุธยา',
-        imageUrl: 'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/AsilKulangHenRooster.jpg',
         note: 'แม่พันธุ์หลักโครงสร้างกระดูกใหญ่ ถ่ายทอดความเร็ว'
       },
       paternalGrandSire: {
@@ -57,7 +57,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         breed: 'พม่าสายเลือดคลาสสิก',
         wins: 8,
         earnings: '2,500,000 บาท',
-        imageUrl: 'https://images.unsplash.com/photo-1612170153139-6f881ff067e0?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Shamo_chicken.jpg',
       },
       paternalGrandDam: {
         id: 'ped-pgd1',
@@ -65,7 +65,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         code: 'PGD-014',
         role: 'PATERNAL_GRANDDAM',
         breed: 'แม่พันธุ์พม่าหน้าหงอน',
-        imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Long_tail_parrot_beak_hen.jpg',
       },
       maternalGrandSire: {
         id: 'ped-mgs1',
@@ -75,7 +75,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         breed: 'พม่าเยียร์',
         wins: 5,
         earnings: '800,000 บาท',
-        imageUrl: 'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/G%C3%A0_ch%E1%BB%8Di.JPG',
       },
       maternalGrandDam: {
         id: 'ped-mgd1',
@@ -83,7 +83,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         code: 'MGD-088',
         role: 'MATERNAL_GRANDDAM',
         breed: 'ลูกเหล่าป่าก๋อยกวนอู',
-        imageUrl: 'https://images.unsplash.com/photo-1612170153139-6f881ff067e0?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/AsilKulangHenRooster.jpg',
       }
     }
   },
@@ -100,15 +100,16 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
       wins: 2,
       draws: 0,
       losses: 0,
-      details: ['ชนะบ่อนชมรมสายเหนือ 44,000 บ.', 'ชนะไฟต์ใหญ่ชานเมือง 220,000 บ. (อัน 3 น็อคคู่ต่อสู้)'],
+      details: ['ชนะสนามเรืองชัย 44,000 บ. (ยกแรก)', 'ชนะสนามชนไก่ภาคอีสาน 220,000 บ.'],
     },
-    price: 45000,
+    price: 42000,
     status: 'AVAILABLE',
-    tags: ['แชมป์เปี้ยน', 'ไก่หนุ่มคัดผ่าน'],
-    imageUrl: 'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=800&q=80',
+    tags: ['ดาวรุ่ง', 'ไก่หนุ่มคัดผ่าน'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/G%C3%A0_ch%E1%BB%8Di.JPG',
     galleryImages: [
-      'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=800&q=80'
+      'https://upload.wikimedia.org/wikipedia/commons/6/6b/G%C3%A0_ch%E1%BB%8Di.JPG',
+      'https://upload.wikimedia.org/wikipedia/commons/a/a9/Life_of_chicken_-_Chonburi.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/3/35/Asil_chicken.jpg'
     ],
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     depositPercentage: 30,
@@ -116,81 +117,82 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
       father: {
         id: 'ped-f2',
         name: 'เจ้าแสนชัย (ป่าก๋อยร้อยเหลี่ยม)',
-        code: 'SIRE-015',
+        code: 'SIRE-018',
         role: 'FATHER',
-        breed: 'ป่าก๋อยสายตรงลำพูน',
+        breed: 'ป่าก๋อยลำพูนแท้',
         wins: 7,
         earnings: '3,000,000 บาท',
-        imageUrl: 'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=400&q=80',
-        note: 'สถิติตีคู่ต่อสู้หักทุกไฟต์ พ่อพันธุ์เงินล้าน'
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/35/Asil_chicken.jpg',
+        videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        note: 'สถิติไร้พ่าย เชิงกัดหลังรุนแรงที่สุด'
       },
       mother: {
         id: 'ped-m2',
-        name: 'แม่มังกรขาว',
-        code: 'DAM-065',
+        name: 'แม่เสือดาว',
+        code: 'DAM-019',
         role: 'MOTHER',
-        breed: 'ป่าก๋อยกัดจัด',
-        imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+        breed: 'ป่าก๋อยสายเลือดเงินล้าน',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Long_tail_parrot_beak_hen.jpg',
       },
       paternalGrandSire: {
         id: 'ped-pgs2',
-        name: 'เจ้าแบล็คฮอว์ค',
+        name: 'เจ้ามังกรทอง',
         code: 'PGS-099',
         role: 'PATERNAL_GRANDSIRE',
-        breed: 'ก๋อยโบราณแท้',
-        wins: 5,
-        earnings: '1,500,000 บาท',
-        imageUrl: 'https://images.unsplash.com/photo-1612170153139-6f881ff067e0?auto=format&fit=crop&w=400&q=80',
+        breed: 'ป่าก๋อยโบราณ',
+        wins: 4,
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Fighting_cock_in_Mindanao_04.jpg',
       },
       paternalGrandDam: {
         id: 'ped-pgd2',
-        name: 'แม่ดวงใจ',
-        code: 'PGD-019',
+        name: 'แม่ทับทิมสยาม',
+        code: 'PGD-082',
         role: 'PATERNAL_GRANDDAM',
-        breed: 'แม่ก๋อยร้อยสาย',
-        imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+        breed: 'แม่พันธุ์โครงสร้างใหญ่',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/AsilKulangHenRooster.jpg',
       },
       maternalGrandSire: {
         id: 'ped-mgs2',
-        name: 'เจ้าพยัคฆ์คำราม',
-        code: 'MGS-008',
+        name: 'เจ้าเสือดำ',
+        code: 'MGS-041',
         role: 'MATERNAL_GRANDSIRE',
-        breed: 'ป่าก๋อยเชิงชน',
-        wins: 4,
-        earnings: '660,000 บาท',
-        imageUrl: 'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=400&q=80',
+        breed: 'ป่าก๋อยร้อยเอ็ด',
+        wins: 5,
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Shamo_chicken.jpg',
       },
       maternalGrandDam: {
         id: 'ped-mgd2',
-        name: 'แม่มุกดา',
-        code: 'MGD-031',
+        name: 'แม่เขี้ยวเงิน',
+        code: 'MGD-011',
         role: 'MATERNAL_GRANDDAM',
-        breed: 'สายแม่พันธุ์กัดสปีด',
-        imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+        breed: 'ลูกเหล่าป่าก๋อย',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Long_tail_parrot_beak_hen.jpg',
       }
     }
   },
   {
     id: 'gc-03',
-    code: 'CF-944',
-    name: 'เจ้ามังกรทอง',
-    breed: 'เชิงไทยดั้งเดิม (ตราด+พนัส)',
+    code: 'CF-744',
+    name: 'เจ้าเพชรอุดร',
+    breed: 'ไทยเชิงตราด',
     sex: 'MALE',
     ageMonths: 9,
-    weightKg: 2.8,
-    fightingStyle: 'กอดบน มัดคอ กัดบ่าตีตัว ล็อคแน่นไม่ปล่อย',
+    weightKg: 2.6,
+    fightingStyle: 'ล็อกคอบน มัดปีก กอดทุบตัว บีฟิตแน่น แข็งแกร่งทรหด',
     winRecords: {
       wins: 1,
       draws: 0,
       losses: 0,
-      details: ['ชนะไก่หนุ่มคัดซ้อมระดับจังหวัด 55,000 บ.'],
+      details: ['ชนะน็อกยก 3 สนามชมรมภาคตะวันออก 50,000 บ.'],
     },
     price: 18000,
     status: 'RESERVED',
-    tags: ['ดาวรุ่ง', 'ไก่หนุ่มคัดผ่าน'],
-    imageUrl: 'https://images.unsplash.com/photo-1612170153139-6f881ff067e0?auto=format&fit=crop&w=800&q=80',
+    tags: ['ไก่หนุ่มคัดผ่าน', 'ดาวรุ่ง'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Life_of_chicken_-_Chonburi.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1612170153139-6f881ff067e0?auto=format&fit=crop&w=800&q=80'
+      'https://upload.wikimedia.org/wikipedia/commons/a/a9/Life_of_chicken_-_Chonburi.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/4/44/Gamecock.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/f/f7/Pumpkin_Hulsey_Gamefowl_2.jpg'
     ],
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     depositPercentage: 30,
@@ -203,7 +205,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         breed: 'ไก่ชนเชิงตราดแท้',
         wins: 4,
         earnings: '900,000 บาท',
-        imageUrl: 'https://images.unsplash.com/photo-1612170153139-6f881ff067e0?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Pumpkin_Hulsey_Gamefowl_2.jpg',
       },
       mother: {
         id: 'ped-m3',
@@ -211,7 +213,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         code: 'DAM-011',
         role: 'MOTHER',
         breed: 'สายพันธุ์พนัสนิคม',
-        imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/AsilKulangHenRooster.jpg',
       },
       paternalGrandSire: {
         id: 'ped-pgs3',
@@ -220,7 +222,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         role: 'PATERNAL_GRANDSIRE',
         breed: 'ไก่เชิงสถิติไร้พ่าย',
         wins: 6,
-        imageUrl: 'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Fighting_cock_in_Mindanao_04.jpg',
       },
       paternalGrandDam: {
         id: 'ped-pgd3',
@@ -228,7 +230,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         code: 'PGD-005',
         role: 'PATERNAL_GRANDDAM',
         breed: 'แม่เชิงลำหักลำโค่น',
-        imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Long_tail_parrot_beak_hen.jpg',
       },
       maternalGrandSire: {
         id: 'ped-mgs3',
@@ -237,7 +239,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         role: 'MATERNAL_GRANDSIRE',
         breed: 'สายเชิงโบราณ',
         wins: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1612170153139-6f881ff067e0?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/9f/Aseel%2C_Asil.jpg',
       },
       maternalGrandDam: {
         id: 'ped-mgd3',
@@ -245,7 +247,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         code: 'MGD-099',
         role: 'MATERNAL_GRANDDAM',
         breed: 'สายแม่พันธุ์ชั้นยอด',
-        imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/AsilKulangHenRooster.jpg',
       }
     }
   },
@@ -267,8 +269,12 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
     price: 60000,
     status: 'SOLD',
     tags: ['แชมป์เปี้ยน', 'พ่อพันธุ์หลัก'],
-    imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=800&q=80',
-    galleryImages: ['https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=800&q=80'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Shamo_chicken.jpg',
+    galleryImages: [
+      'https://upload.wikimedia.org/wikipedia/commons/9/97/Shamo_chicken.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/4/41/Fighting_cock_in_Mindanao_04.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/6/6b/G%C3%A0_ch%E1%BB%8Di.JPG'
+    ],
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     depositPercentage: 30,
     pedigree: {
@@ -280,7 +286,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         breed: 'พม่าแข้งทอง',
         wins: 7,
         earnings: '2,800,000 บาท',
-        imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Fighting_cock_in_Mindanao_04.jpg',
       },
       mother: {
         id: 'ped-m4',
@@ -288,7 +294,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         code: 'DAM-080',
         role: 'MOTHER',
         breed: 'ป่าก๋อยสปีด',
-        imageUrl: 'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/AsilKulangHenRooster.jpg',
       },
       paternalGrandSire: {
         id: 'ped-pgs4',
@@ -297,7 +303,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         role: 'PATERNAL_GRANDSIRE',
         breed: 'พม่ารำวงแท้',
         wins: 5,
-        imageUrl: 'https://images.unsplash.com/photo-1612170153139-6f881ff067e0?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/9f/Aseel%2C_Asil.jpg',
       },
       paternalGrandDam: {
         id: 'ped-pgd4',
@@ -305,7 +311,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         code: 'PGD-011',
         role: 'PATERNAL_GRANDDAM',
         breed: 'แม่พันธุ์พม่า',
-        imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Long_tail_parrot_beak_hen.jpg',
       },
       maternalGrandSire: {
         id: 'ped-mgs4',
@@ -314,7 +320,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         role: 'MATERNAL_GRANDSIRE',
         breed: 'ป่าก๋อย',
         wins: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/G%C3%A0_ch%E1%BB%8Di.JPG',
       },
       maternalGrandDam: {
         id: 'ped-mgd4',
@@ -322,7 +328,7 @@ export const INITIAL_GAMECOCKS: Gamecock[] = [
         code: 'MGD-015',
         role: 'MATERNAL_GRANDDAM',
         breed: 'แม่ก๋อยกัดจัด',
-        imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/AsilKulangHenRooster.jpg',
       }
     }
   }
@@ -344,9 +350,9 @@ export const INITIAL_EGGS: FertilizedEgg[] = [
       { quantity: 5, price: 6000, label: 'เซ็ต 5 ฟอง (6,000 บ. - ประหยัด 1,500)' }
     ],
     warrantyTerms: 'รับประกันไข่เชื้อ 7 วัน เมื่อส่องไฟไม่พบเชื้อในวันที่ 7 นับจากวันจัดส่ง ยินดีส่งเคลมให้ฟรีในรอบถัดไปทันที (ผู้ซื้อต้องถ่ายคลิปส่องไฟต่อเนื่องแบบไม่ตัดต่อ)',
-    imageUrl: 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=800&q=80',
-    sireImageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
-    damImageUrl: 'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=400&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=800&q=80',
+    sireImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Gamecock.jpg',
+    damImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/AsilKulangHenRooster.jpg',
     sireVideoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   {
@@ -364,9 +370,9 @@ export const INITIAL_EGGS: FertilizedEgg[] = [
       { quantity: 5, price: 8500, label: 'เซ็ต 5 ฟอง (8,500 บ. - ยอดนิยม)' }
     ],
     warrantyTerms: 'รับประกันไข่มีเชื้อ 100% ส่องไฟวันที่ 7 ไม่พบเชื้อเคลมใหม่ฟรีรอบถัดไป พร้อมบัตรรับรองสายพันธุ์แท้จากฟาร์ม',
-    imageUrl: 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=800&q=80',
-    sireImageUrl: 'https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&w=400&q=80',
-    damImageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1506976785307-8732e854ad03?auto=format&fit=crop&w=800&q=80',
+    sireImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/G%C3%A0_ch%E1%BB%8Di.JPG',
+    damImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Long_tail_parrot_beak_hen.jpg',
     sireVideoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   }
 ];
@@ -395,7 +401,7 @@ export const INITIAL_EQUIPMENT: SupplyEquipment[] = [
     stock: 4, // Intentionally low for warning demo
     minStockAlert: 10,
     unit: 'กระปุก',
-    imageUrl: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=600&q=80',
     description: 'เสริมแคลเซียม วิตามินรวม บำรุงกล้ามเนื้อ บินดีไม่มีหมดแรง ตีลำหนัก'
   },
   {
@@ -408,7 +414,7 @@ export const INITIAL_EQUIPMENT: SupplyEquipment[] = [
     stock: 28,
     minStockAlert: 5,
     unit: 'ชุด',
-    imageUrl: 'https://images.unsplash.com/photo-1517438322307-e67111335449?auto=format&fit=crop&w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80',
     description: 'ผลิตจากหนังแท้บุฟองน้ำหนานุ่ม ป้องกันเดือยหักและบาดเจ็บขณะเตะเป้าซ้อมปล้ำ'
   },
   {
@@ -421,7 +427,7 @@ export const INITIAL_EQUIPMENT: SupplyEquipment[] = [
     stock: 35,
     minStockAlert: 5,
     unit: 'ชิ้น',
-    imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=600&q=80',
     description: 'ซิลิโคนเกรดการแพทย์ ยืดหยุ่นสูง ใส่ง่าย หายใจสะดวก ป้องกันปากบนล่างหลุด'
   },
   {
@@ -434,7 +440,7 @@ export const INITIAL_EQUIPMENT: SupplyEquipment[] = [
     stock: 12,
     minStockAlert: 3,
     unit: 'ชุด',
-    imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=600&q=80',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Chicken_cage_1.jpg',
     description: 'สุ่มหวายโครงสร้างเหนียวแน่น แข็งแรงทนแดดทนฝน พร้อมผ้ามุ้งกันยุงตาถี่ป้องกันยุงรำคาญ'
   }
 ];
@@ -459,12 +465,12 @@ export const INITIAL_ORDERS: Order[] = [
           {
             id: 'cart-1',
             productId: 'gc-03',
-            name: 'เจ้ามังกรทอง (CF-944)',
-            code: 'CF-944',
+            name: 'เจ้าเพชรอุดร (CF-744)',
+            code: 'CF-744',
             type: 'LIVE_GAMECOCK',
             price: 18000,
             quantity: 1,
-            imageUrl: 'https://images.unsplash.com/photo-1612170153139-6f881ff067e0?auto=format&fit=crop&w=400&q=80',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Life_of_chicken_-_Chonburi.jpg',
             isDeposit: true,
             depositAmount: 5400
           }
@@ -503,7 +509,7 @@ export const INITIAL_ORDERS: Order[] = [
             type: 'FERTILIZED_EGG',
             price: 4000,
             quantity: 1,
-            imageUrl: 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=400&q=80'
+            imageUrl: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=400&q=80'
           },
           {
             id: 'cart-3',
@@ -548,7 +554,7 @@ export const INITIAL_ORDERS: Order[] = [
             type: 'LIVE_GAMECOCK',
             price: 60000,
             quantity: 1,
-            imageUrl: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=400&q=80'
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Shamo_chicken.jpg'
           }
         ],
         subtotal: 60000,
@@ -568,7 +574,7 @@ export const INITIAL_NOTIFICATIONS: AppNotification[] = [
   {
     id: 'notif-1',
     title: 'มีคำสั่งซื้อใหม่เข้ามา',
-    message: 'ออเดอร์ #CF-ORD-202611-001 มัดจำไก่ชน "เจ้ามังกรทอง" รอการตรวจสอบสลิป',
+    message: 'ออเดอร์ #CF-ORD-202611-001 มัดจำไก่ชน "เจ้าเพชรอุดร" รอการตรวจสอบสลิป',
     time: '10 นาทีที่แล้ว',
     type: 'ORDER',
     read: false
@@ -590,4 +596,3 @@ export const INITIAL_NOTIFICATIONS: AppNotification[] = [
     read: true
   }
 ];
-

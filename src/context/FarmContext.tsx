@@ -67,9 +67,24 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCockForModal, setSelectedCockForModal] = useState<Gamecock | null>(null);
 
-  // Load from localStorage if present
+  // Load from localStorage if present with version check to invalidate old hen/farm images
   useEffect(() => {
     try {
+      const currentVersion = 'v3_real_gamecocks';
+      const savedVersion = localStorage.getItem('cyber_farm_version');
+
+      if (savedVersion !== currentVersion) {
+        // Clear previous cache so new authentic gamecock & equipment images load
+        localStorage.removeItem('cyber_farm_gamecocks');
+        localStorage.removeItem('cyber_farm_equipment');
+        localStorage.removeItem('cyber_farm_orders');
+        localStorage.setItem('cyber_farm_version', currentVersion);
+        setGamecocks(INITIAL_GAMECOCKS);
+        setEquipment(INITIAL_EQUIPMENT);
+        setOrders(INITIAL_ORDERS);
+        return;
+      }
+
       const savedOrders = localStorage.getItem('cyber_farm_orders');
       if (savedOrders) setOrders(JSON.parse(savedOrders));
 

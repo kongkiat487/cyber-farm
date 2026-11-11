@@ -45,7 +45,7 @@ export const AdminInventory: React.FC = () => {
   const [cockStyle, setCockStyle] = useState('ม้าล่อสปีด แข้งเปล่าคม ตีลำหัก');
   const [cockTags, setCockTags] = useState('ดาวรุ่ง,ไก่หนุ่มคัดผ่าน');
   const [cockImageUrl, setCockImageUrl] = useState(
-    'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=800&q=80'
+    'https://upload.wikimedia.org/wikipedia/commons/4/44/Gamecock.jpg'
   );
 
   // New Supply Form State
