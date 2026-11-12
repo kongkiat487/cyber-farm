@@ -12,10 +12,10 @@ interface CheckoutModalProps {
 }
 
 export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onOrderSuccess }) => {
-  const { cart, createOrder } = useFarm();
+  const { cart, createOrder, role, currentMember } = useFarm();
 
-  const [customerName, setCustomerName] = useState('เอกชัย นามสมมุติ');
-  const [phone, setPhone] = useState('089-123-4567');
+  const [customerName, setCustomerName] = useState(currentMember ? currentMember.name : 'เอกชัย นามสมมุติ');
+  const [phone, setPhone] = useState(currentMember ? currentMember.phone : '089-123-4567');
   const [address, setAddress] = useState('123 หมู่ 5 ต.หนองกี่ อ.กบินทร์บุรี จ.ปราจีนบุรี 25110');
   const [slipPreview, setSlipPreview] = useState<string | null>(
     'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80'
@@ -36,7 +36,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, o
   const parcelSubtotal = parcelItems.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
   const parcelShipping = parcelItems.length > 0 ? 80 : 0;
 
-  const grandTotal = liveSubtotal + liveShipping + parcelSubtotal + parcelShipping;
+  const rawSubtotal = liveSubtotal + parcelSubtotal;
+  const isMember = role === 'MEMBER';
+  const memberDiscount = isMember ? Math.round(rawSubtotal * 0.05) : 0;
+
+  const grandTotal = Math.max(0, liveSubtotal + liveShipping + parcelSubtotal + parcelShipping - memberDiscount);
   const hasDeposit = liveItems.some(i => i.isDeposit);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -210,6 +214,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, o
                   <span className="text-slate-400">เลขที่บัญชี:</span>{' '}
                   <span className="font-mono font-bold text-sm text-slate-900">098-7-65432-1</span>
                 </p>
+                {isMember && memberDiscount > 0 && (
+                  <p className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200">
+                    ส่วนลดสมาชิก Member 5%: -฿{memberDiscount.toLocaleString()}
+                  </p>
+                )}
                 <p>
                   <span className="text-slate-400">ยอดที่ต้องโอน:</span>{' '}
                   <span className="font-black text-amber-600 text-base">฿{grandTotal.toLocaleString()}</span>

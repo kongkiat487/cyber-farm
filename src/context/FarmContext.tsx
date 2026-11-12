@@ -11,7 +11,9 @@ import {
   OrderStatus,
   LogisticsInfo,
   EggPriceTier,
-  GamecockStatus
+  GamecockStatus,
+  UserRole,
+  MemberProfile
 } from '../types';
 import {
   INITIAL_GAMECOCKS,
@@ -22,8 +24,12 @@ import {
 } from '../data/mockData';
 
 interface FarmContextType {
-  role: 'CUSTOMER' | 'ADMIN';
-  setRole: (role: 'CUSTOMER' | 'ADMIN') => void;
+  role: UserRole;
+  setRole: (role: UserRole) => void;
+  currentMember: MemberProfile | null;
+  loginAsMember: (creds: { phone: string; email?: string }) => void;
+  registerMember: (profile: Partial<MemberProfile>) => void;
+  logoutMember: () => void;
   gamecocks: Gamecock[];
   eggs: FertilizedEgg[];
   equipment: SupplyEquipment[];
@@ -58,7 +64,8 @@ interface FarmContextType {
 const FarmContext = createContext<FarmContextType | undefined>(undefined);
 
 export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [role, setRole] = useState<'CUSTOMER' | 'ADMIN'>('CUSTOMER');
+  const [role, setRole] = useState<UserRole>('GUEST');
+  const [currentMember, setCurrentMember] = useState<MemberProfile | null>(null);
   const [gamecocks, setGamecocks] = useState<Gamecock[]>(INITIAL_GAMECOCKS);
   const [eggs, setEggs] = useState<FertilizedEgg[]>(INITIAL_EGGS);
   const [equipment, setEquipment] = useState<SupplyEquipment[]>(INITIAL_EQUIPMENT);
@@ -96,6 +103,11 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const savedCart = localStorage.getItem('cyber_farm_cart');
       if (savedCart) setCart(JSON.parse(savedCart));
+
+      const savedMember = localStorage.getItem('cyber_farm_member');
+      if (savedMember) {
+        setCurrentMember(JSON.parse(savedMember));
+      }
     } catch {
       // ignore
     }
@@ -108,10 +120,57 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem('cyber_farm_gamecocks', JSON.stringify(gamecocks));
       localStorage.setItem('cyber_farm_equipment', JSON.stringify(equipment));
       localStorage.setItem('cyber_farm_cart', JSON.stringify(cart));
+      if (currentMember) {
+        localStorage.setItem('cyber_farm_member', JSON.stringify(currentMember));
+      } else {
+        localStorage.removeItem('cyber_farm_member');
+      }
     } catch {
       // ignore
     }
-  }, [orders, gamecocks, equipment, cart]);
+  }, [orders, gamecocks, equipment, cart, currentMember]);
+
+  const loginAsMember = (creds: { phone: string; email?: string }) => {
+    const existing: MemberProfile = currentMember || {
+      id: 'MB-' + Math.floor(1000 + Math.random() * 9000),
+      name: 'เสี่ยเบิร์ด ซุ้มเพชรนำโชค',
+      phone: creds.phone || '089-123-4567',
+      email: creds.email || 'member@cyberfarm.com',
+      farmName: 'ซุ้มเพชรนำโชค (อยุธยา)',
+      memberTier: 'VIP',
+      discountPercent: 5,
+      points: 250,
+      joinedDate: '2025-01-15'
+    };
+    setCurrentMember(existing);
+    setRole('MEMBER');
+  };
+
+  const registerMember = (profile: Partial<MemberProfile>) => {
+    const newMember: MemberProfile = {
+      id: 'MB-' + Math.floor(1000 + Math.random() * 9000),
+      name: profile.name || 'สมาชิกใหม่',
+      phone: profile.phone || '081-000-0000',
+      email: profile.email || '',
+      farmName: profile.farmName || 'ซุ้มไก่ชนชนบท',
+      memberTier: 'SILVER',
+      discountPercent: 5,
+      points: 100,
+      joinedDate: new Date().toISOString().split('T')[0]
+    };
+    setCurrentMember(newMember);
+    setRole('MEMBER');
+  };
+
+  const logoutMember = () => {
+    setCurrentMember(null);
+    setRole('GUEST');
+    try {
+      localStorage.removeItem('cyber_farm_member');
+    } catch {
+      // ignore
+    }
+  };
 
   const addToCart = (item: Omit<CartItem, 'id'>) => {
     // If live cock, can only add 1 and must check if already in cart
@@ -386,6 +445,8 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setOrders(INITIAL_ORDERS);
     setNotifications(INITIAL_NOTIFICATIONS);
     setCart([]);
+    setCurrentMember(null);
+    setRole('GUEST');
     localStorage.clear();
   };
 
@@ -396,6 +457,10 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
       value={{
         role,
         setRole,
+        currentMember,
+        loginAsMember,
+        registerMember,
+        logoutMember,
         gamecocks,
         eggs,
         equipment,

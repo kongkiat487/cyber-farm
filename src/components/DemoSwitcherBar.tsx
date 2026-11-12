@@ -77,21 +77,21 @@ export const DemoSwitcherBar: React.FC<DemoSwitcherBarProps> = ({
             <span>Portal</span>
           </button>
 
-          {/* 2. Web Storefront Mode */}
+          {/* 2. Web Storefront Mode (Guest) */}
           <button
             onClick={() => {
-              setRole('CUSTOMER');
+              setRole('GUEST');
               setViewMode('WEB');
               if (activeNav.startsWith('ADMIN')) setActiveNav('HOME');
             }}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full font-bold transition-all cursor-pointer ${
-              role === 'CUSTOMER' && viewMode === 'WEB'
+              role === 'GUEST' && viewMode === 'WEB'
                 ? 'bg-white/20 text-white ring-1 ring-white/40'
                 : 'text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
             <Monitor className="w-3.5 h-3.5 text-sky-400" />
-            <span>Web</span>
+            <span>Web (Guest)</span>
             {totalCartCount > 0 && (
               <span className="w-4 h-4 rounded-full bg-amber-500 text-slate-950 text-[10px] font-black flex items-center justify-center">
                 {totalCartCount}
@@ -99,24 +99,41 @@ export const DemoSwitcherBar: React.FC<DemoSwitcherBarProps> = ({
             )}
           </button>
 
-          {/* 3. Mobile Viewport Simulator Mode */}
+          {/* 3. Member Mode (Member Portal with 5% discount) */}
           <button
             onClick={() => {
-              setRole('CUSTOMER');
+              setRole('MEMBER');
+              setViewMode('WEB');
+              if (activeNav.startsWith('ADMIN')) setActiveNav('HOME');
+            }}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full font-bold transition-all cursor-pointer ${
+              role === 'MEMBER' && viewMode === 'WEB'
+                ? 'bg-emerald-500/30 text-emerald-300 ring-1 ring-emerald-400/50'
+                : 'text-emerald-400 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Member (-5%)</span>
+          </button>
+
+          {/* 4. Mobile Viewport Simulator Mode */}
+          <button
+            onClick={() => {
+              if (role === 'ADMIN') setRole('GUEST');
               setViewMode('MOBILE');
               if (activeNav.startsWith('ADMIN')) setActiveNav('HOME');
             }}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full font-bold transition-all cursor-pointer ${
-              role === 'CUSTOMER' && viewMode === 'MOBILE'
+              role !== 'ADMIN' && viewMode === 'MOBILE'
                 ? 'bg-white/20 text-white ring-1 ring-white/40'
                 : 'text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
-            <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+            <Smartphone className="w-3.5 h-3.5 text-amber-400" />
             <span>Mobile</span>
           </button>
 
-          {/* 4. Backoffice / Admin Mode */}
+          {/* 5. Backoffice / Admin Mode */}
           <button
             onClick={() => {
               setRole('ADMIN');
@@ -125,7 +142,7 @@ export const DemoSwitcherBar: React.FC<DemoSwitcherBarProps> = ({
             }}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full font-bold transition-all cursor-pointer ${
               role === 'ADMIN'
-                ? 'bg-white/20 text-white ring-1 ring-white/40'
+                ? 'bg-purple-600/40 text-purple-200 ring-1 ring-purple-400'
                 : 'text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >

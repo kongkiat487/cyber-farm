@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useFarm } from '../context/FarmContext';
-import { X, Trash2, Plus, Minus, ArrowRight, Truck, Package, ShieldAlert } from 'lucide-react';
+import { X, Trash2, Plus, Minus, ArrowRight, Truck, Package, ShieldAlert, Award } from 'lucide-react';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -11,7 +11,7 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, onProceedToCheckout }) => {
-  const { cart, removeFromCart, updateCartQuantity, clearCart } = useFarm();
+  const { cart, removeFromCart, updateCartQuantity, clearCart, role, currentMember } = useFarm();
 
   if (!isOpen) return null;
 
@@ -27,7 +27,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, onProce
   const parcelSubtotal = parcelItems.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
   const parcelShipping = parcelItems.length > 0 ? 80 : 0;
 
-  const grandTotal = liveSubtotal + liveShipping + parcelSubtotal + parcelShipping;
+  const rawSubtotal = liveSubtotal + parcelSubtotal;
+  const isMember = role === 'MEMBER';
+  const memberDiscount = isMember ? Math.round(rawSubtotal * 0.05) : 0;
+
+  const grandTotal = Math.max(0, liveSubtotal + liveShipping + parcelSubtotal + parcelShipping - memberDiscount);
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-black/60 backdrop-blur-xs flex justify-end">
@@ -178,6 +182,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, onProce
                 <span>ราคาสินค้ารวม</span>
                 <span>฿{(liveSubtotal + parcelSubtotal).toLocaleString()}</span>
               </div>
+              {isMember && memberDiscount > 0 && (
+                <div className="flex justify-between text-emerald-700 bg-emerald-50 px-2 py-1 rounded-lg font-bold border border-emerald-200">
+                  <span className="flex items-center gap-1">
+                    <Award className="w-3.5 h-3.5 text-emerald-600" /> ส่วนลดสมาชิก Member 5% ({currentMember?.memberTier || 'VIP'})
+                  </span>
+                  <span>-฿{memberDiscount.toLocaleString()}</span>
+                </div>
+              )}
               {liveItems.length > 0 && (
                 <div className="flex justify-between text-amber-700">
                   <span>ค่าจัดส่งรถตู้สัตว์เลี้ยง</span>

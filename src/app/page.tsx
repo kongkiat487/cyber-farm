@@ -12,6 +12,7 @@ import { CartDrawer } from '../components/CartDrawer';
 import { CheckoutModal } from '../components/CheckoutModal';
 import { TrackingModal } from '../components/TrackingModal';
 import { NotificationsModal } from '../components/NotificationsModal';
+import { AuthModal } from '../components/AuthModal';
 import { AdminKanban } from '../components/AdminKanban';
 import { AdminInventory } from '../components/AdminInventory';
 import { AdminAnalytics } from '../components/AdminAnalytics';
@@ -56,6 +57,8 @@ function FarmStoreContent() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isTrackingOpen, setIsTrackingOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [authDefaultMode, setAuthDefaultMode] = useState<'LOGIN' | 'REGISTER'>('LOGIN');
   const [recentOrderSuccess, setRecentOrderSuccess] = useState<Order | null>(null);
 
   // Filters state
@@ -104,11 +107,11 @@ function FarmStoreContent() {
 
   const handleSelectSystem = (system: 'WEB' | 'MOBILE' | 'BACKOFFICE' | 'TRACKING') => {
     if (system === 'WEB') {
-      setRole('CUSTOMER');
+      setRole('GUEST');
       setViewMode('WEB');
       setActiveNav('HOME');
     } else if (system === 'MOBILE') {
-      setRole('CUSTOMER');
+      setRole('GUEST');
       setViewMode('MOBILE');
       setActiveNav('HOME');
     } else if (system === 'BACKOFFICE') {
@@ -129,6 +132,10 @@ function FarmStoreContent() {
         onOpenCart={() => setIsCartOpen(true)}
         onOpenNotifications={() => setIsNotifOpen(true)}
         onOpenTracking={() => setIsTrackingOpen(true)}
+        onOpenAuth={(m) => {
+          setAuthDefaultMode(m || 'LOGIN');
+          setIsAuthOpen(true);
+        }}
       />
 
       {/* Main Content Area */}
@@ -156,8 +163,8 @@ function FarmStoreContent() {
           </div>
         )}
 
-        {/* CUSTOMER STOREFRONT VIEW */}
-        {role === 'CUSTOMER' && (
+        {/* CUSTOMER & MEMBER STOREFRONT VIEW */}
+        {role !== 'ADMIN' && (
           <div className="space-y-4 sm:space-y-6">
             {/* 1. HOME / OVERVIEW VIEW (รวมทุกส่วนไว้หน้าเดียวเป็นหน้าแรก) */}
             {activeNav === 'HOME' && (
@@ -525,6 +532,13 @@ function FarmStoreContent() {
       <NotificationsModal
         isOpen={isNotifOpen}
         onClose={() => setIsNotifOpen(false)}
+      />
+
+      {/* Member Login / Register Modal */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        defaultMode={authDefaultMode}
       />
     </div>
   );

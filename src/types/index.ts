@@ -1,3 +1,17 @@
+export type UserRole = 'GUEST' | 'MEMBER' | 'ADMIN';
+
+export interface MemberProfile {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  farmName?: string;
+  memberTier: 'BRONZE' | 'SILVER' | 'GOLD' | 'VIP';
+  discountPercent: number;
+  points?: number;
+  joinedDate?: string;
+}
+
 export type GamecockStatus = 'AVAILABLE' | 'RESERVED' | 'SOLD' | 'BREEDER';
 export type ProductType = 'LIVE_GAMECOCK' | 'FERTILIZED_EGG' | 'EQUIPMENT';
 export type SupplyCategory = 'MEDICINE' | 'TRAINING' | 'FARM_TOOLS';
