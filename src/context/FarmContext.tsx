@@ -58,6 +58,7 @@ interface FarmContextType {
   updateEquipmentStock: (equipmentId: string, newStock: number) => void;
   addNewGamecock: (cock: Gamecock) => void;
   addNewSupply: (supply: SupplyEquipment) => void;
+  addNewAuction: (auction: AuctionItem) => void;
   updateEggQuota: (eggId: string, addedQuota: number) => void;
   updateGamecockStatus: (cockId: string, status: GamecockStatus) => void;
   markNotificationAsRead: (notificationId: string) => void;
@@ -539,6 +540,19 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setNotifications(prev => [notif, ...prev]);
   };
 
+  const addNewAuction = (newAuction: AuctionItem) => {
+    setAuctions(prev => [newAuction, ...prev]);
+    const notif: AppNotification = {
+      id: `notif-auc-${Date.now()}`,
+      title: 'เปิดห้องประมูลรายการใหม่!',
+      message: `เปิดประมูล "${newAuction.title}" (${newAuction.code}) ราคาเริ่มต้น ฿${newAuction.startingPrice.toLocaleString()}`,
+      time: 'เมื่อสักครู่',
+      type: 'AUCTION',
+      read: false
+    };
+    setNotifications(prev => [notif, ...prev]);
+  };
+
   const updateEggQuota = (eggId: string, addedQuota: number) => {
     setEggs(prev =>
       prev.map(egg =>
@@ -608,6 +622,7 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
         updateEquipmentStock,
         addNewGamecock,
         addNewSupply,
+        addNewAuction,
         updateEggQuota,
         updateGamecockStatus,
         markNotificationAsRead,

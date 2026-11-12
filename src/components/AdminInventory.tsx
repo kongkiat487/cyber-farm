@@ -11,29 +11,51 @@ import {
   X,
   PlusCircle,
   TrendingUp,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Gavel,
+  Clock,
+  Sparkles
 } from 'lucide-react';
-import { SupplyEquipment, Gamecock, GamecockStatus, SupplyCategory } from '../types';
+import { SupplyEquipment, Gamecock, GamecockStatus, SupplyCategory, AuctionItem } from '../types';
 
 export const AdminInventory: React.FC = () => {
   const {
     gamecocks,
     eggs,
     equipment,
+    auctions,
     updateEquipmentStock,
     addNewGamecock,
     addNewSupply,
+    addNewAuction,
     updateEggQuota,
     updateGamecockStatus
   } = useFarm();
 
-  const [activeTab, setActiveTab] = useState<'COCKS' | 'EGGS' | 'SUPPLIES'>('COCKS');
+  const [activeTab, setActiveTab] = useState<'COCKS' | 'EGGS' | 'SUPPLIES' | 'AUCTIONS'>('COCKS');
   const [editingSupplyId, setEditingSupplyId] = useState<string | null>(null);
   const [stockInput, setStockInput] = useState<number>(0);
 
   // Modal States
   const [showAddCockModal, setShowAddCockModal] = useState(false);
   const [showAddSupplyModal, setShowAddSupplyModal] = useState(false);
+  const [showAddAuctionModal, setShowAddAuctionModal] = useState(false);
+
+  // New Auction Form State
+  const [aucTitle, setAucTitle] = useState('');
+  const [aucCode, setAucCode] = useState(`AUC-${Math.floor(100 + Math.random() * 900)}`);
+  const [aucBreed, setAucBreed] = useState('พม่าม้าล่อรำวง + กวนอู');
+  const [aucStyle, setAucStyle] = useState('ม้าล่อสปีดรวดเร็ว แข้งหน้าถี่จัด ล่อสั้นสลับยาว');
+  const [aucWeight, setAucWeight] = useState(2.75);
+  const [aucAge, setAucAge] = useState(9);
+  const [aucStartPrice, setAucStartPrice] = useState(15000);
+  const [aucMinIncrement, setAucMinIncrement] = useState(1000);
+  const [aucBuyoutPrice, setAucBuyoutPrice] = useState(45000);
+  const [aucDurationHours, setAucDurationHours] = useState(6);
+  const [aucImageUrl, setAucImageUrl] = useState(
+    'https://upload.wikimedia.org/wikipedia/commons/4/44/Gamecock.jpg'
+  );
+  const [aucPedigree, setAucPedigree] = useState('พ่อ: เจ้าเทาสายฟ้า (แชมป์ 4 ไฟต์) / แม่: แม่ทองกวาว');
 
   // New Gamecock Form State
   const [cockName, setCockName] = useState('');
@@ -193,6 +215,39 @@ export const AdminInventory: React.FC = () => {
     setSupplySku(`SUP-${Math.floor(100 + Math.random() * 900)}`);
   };
 
+  const handleCreateAuction = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!aucTitle || !aucCode) return;
+
+    const newAuction: AuctionItem = {
+      id: `auc-${Date.now()}`,
+      title: aucTitle,
+      code: aucCode,
+      breed: aucBreed,
+      fightingStyle: aucStyle,
+      weightKg: Number(aucWeight),
+      ageMonths: Number(aucAge),
+      imageUrl: aucImageUrl,
+      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      startingPrice: Number(aucStartPrice),
+      currentBid: Number(aucStartPrice),
+      minBidIncrement: Number(aucMinIncrement),
+      buyoutPrice: aucBuyoutPrice ? Number(aucBuyoutPrice) : undefined,
+      startTime: new Date().toISOString(),
+      endTime: new Date(Date.now() + Number(aucDurationHours) * 3600 * 1000).toISOString(),
+      status: 'ACTIVE',
+      bids: [],
+      description: `ยอดไก่ชนคัดพิเศษเปิดเคาะประมูลสำหรับสมาชิกฟาร์ม สไตล์ ${aucStyle}`,
+      pedigreeSummary: aucPedigree || 'สายเลือดแชมป์เงินล้าน 3 รุ่น'
+    };
+
+    addNewAuction(newAuction);
+    setShowAddAuctionModal(false);
+    // Reset Form
+    setAucTitle('');
+    setAucCode(`AUC-${Math.floor(100 + Math.random() * 900)}`);
+  };
+
   const lowStockCount = equipment.filter(e => e.stock <= e.minStockAlert).length;
 
   return (
@@ -224,6 +279,15 @@ export const AdminInventory: React.FC = () => {
               className="py-2 px-3.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-xl text-xs flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" /> เพิ่มสินค้า/เวชภัณฑ์ใหม่
+            </button>
+          )}
+
+          {activeTab === 'AUCTIONS' && (
+            <button
+              onClick={() => setShowAddAuctionModal(true)}
+              className="py-2 px-3.5 bg-rose-600 hover:bg-rose-700 text-white font-black rounded-xl text-xs flex items-center gap-1.5 shadow-md shadow-rose-600/20 transition-all cursor-pointer"
+            >
+              <Gavel className="w-4 h-4" /> ลงโพสต์เปิดประมูลไก่ชน
             </button>
           )}
 
@@ -268,6 +332,17 @@ export const AdminInventory: React.FC = () => {
         >
           💊 เวชภัณฑ์และอุปกรณ์ ({equipment.length})
           {lowStockCount > 0 && <span className="w-2 h-2 rounded-full bg-rose-500" />}
+        </button>
+        <button
+          onClick={() => setActiveTab('AUCTIONS')}
+          className={`py-2 px-4 text-xs font-black border-b-2 transition-all flex items-center gap-1.5 cursor-pointer ${
+            activeTab === 'AUCTIONS'
+              ? 'border-rose-600 text-rose-600 font-black'
+              : 'border-transparent text-slate-500 hover:text-rose-600'
+          }`}
+        >
+          <Gavel className="w-3.5 h-3.5 text-rose-500" />
+          <span>โพสต์ประมูลสด ({auctions.length})</span>
         </button>
       </div>
 
@@ -504,6 +579,96 @@ export const AdminInventory: React.FC = () => {
               })}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* 4. AUCTIONS TAB (จัดการรายการประมูลสด) */}
+      {activeTab === 'AUCTIONS' && (
+        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs text-slate-600">
+              <thead className="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 uppercase text-[10px]">
+                <tr>
+                  <th className="p-3">รหัส/ชื่อรายการประมูล</th>
+                  <th className="p-3">สายพันธุ์/ลีลา</th>
+                  <th className="p-3">ราคาเปิด / ราคาปัจจุบัน</th>
+                  <th className="p-3">เคาะจบ (Buyout)</th>
+                  <th className="p-3">ผู้เคาะสูงสุด</th>
+                  <th className="p-3">สถานะ</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {auctions.map(item => (
+                  <tr key={item.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="p-3">
+                      <div className="flex items-center gap-2.5">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="w-11 h-11 rounded-xl object-cover shrink-0 border border-slate-200"
+                        />
+                        <div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-mono text-[10px] bg-slate-100 text-slate-600 font-bold px-1.5 py-0.5 rounded">
+                              {item.code}
+                            </span>
+                            <span className="font-black text-slate-900 text-xs">{item.title}</span>
+                          </div>
+                          <span className="text-[10px] text-slate-400 block mt-0.5">
+                            เคาะไปแล้ว {item.bids.length} ครั้ง • นน. {item.weightKg} กก.
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td className="p-3">
+                      <span className="font-bold text-slate-800 block">{item.breed}</span>
+                      <span className="text-[10px] text-slate-500 line-clamp-1">{item.fightingStyle}</span>
+                    </td>
+
+                    <td className="p-3">
+                      <span className="text-slate-400 text-[10px] block">เปิด: ฿{item.startingPrice.toLocaleString()}</span>
+                      <span className="text-sm font-black font-mono text-rose-600">
+                        ฿{item.currentBid.toLocaleString()}
+                      </span>
+                    </td>
+
+                    <td className="p-3">
+                      {item.buyoutPrice ? (
+                        <span className="font-mono font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded text-[11px]">
+                          ฿{item.buyoutPrice.toLocaleString()}
+                        </span>
+                      ) : (
+                        <span className="text-slate-400 text-[10px]">-</span>
+                      )}
+                    </td>
+
+                    <td className="p-3">
+                      {item.highestBidder ? (
+                        <div>
+                          <span className="font-bold text-slate-900 block">{item.highestBidder.name}</span>
+                          <span className="text-[10px] text-emerald-600 font-bold">{item.highestBidder.farm || 'สมาชิก'}</span>
+                        </div>
+                      ) : (
+                        <span className="text-slate-400 text-[10px]">ยังไม่มีผู้เคาะ</span>
+                      )}
+                    </td>
+
+                    <td className="p-3">
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        item.status === 'ACTIVE'
+                          ? 'bg-rose-100 text-rose-800 border border-rose-200'
+                          : 'bg-slate-100 text-slate-600'
+                      }`}>
+                        {item.status === 'ACTIVE' ? 'กำลังประมูล (Live)' : 'ปิดประมูลแล้ว'}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
@@ -779,6 +944,182 @@ export const AdminInventory: React.FC = () => {
                   className="py-2 px-5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-xl cursor-pointer"
                 >
                   เพิ่มสินค้าลงระบบ
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 3: ADD NEW AUCTION (เปิดโพสต์ประมูลใหม่) */}
+      {showAddAuctionModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-xs overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-200 p-5 sm:p-6 space-y-4">
+            <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+              <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                <Gavel className="w-5 h-5 text-rose-600" />
+                <span>ลงโพสต์เปิดประมูลไก่ชน (New Auction)</span>
+              </h3>
+              <button
+                onClick={() => setShowAddAuctionModal(false)}
+                className="text-slate-400 hover:text-slate-700 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateAuction} className="space-y-3 text-xs">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-slate-600 font-bold block mb-1">รหัสประมูล *</label>
+                  <input
+                    type="text"
+                    required
+                    value={aucCode}
+                    onChange={e => setAucCode(e.target.value)}
+                    className="w-full p-2 border border-slate-300 rounded-xl font-mono outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="text-slate-600 font-bold block mb-1">ชื่อรายการประมูล *</label>
+                  <input
+                    type="text"
+                    required
+                    value={aucTitle}
+                    onChange={e => setAucTitle(e.target.value)}
+                    placeholder="เช่น เจ้าเพชรสายฟ้า (เกรด VIP)"
+                    className="w-full p-2 border border-slate-300 rounded-xl outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2">
+                <div>
+                  <label className="text-slate-600 font-bold block mb-1">สายพันธุ์</label>
+                  <input
+                    type="text"
+                    value={aucBreed}
+                    onChange={e => setAucBreed(e.target.value)}
+                    placeholder="พม่า/ป่าก๋อย/เชิง"
+                    className="w-full p-2 border border-slate-300 rounded-xl outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="text-slate-600 font-bold block mb-1">นน. (กก.)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={aucWeight}
+                    onChange={e => setAucWeight(Number(e.target.value))}
+                    className="w-full p-2 border border-slate-300 rounded-xl outline-none font-mono"
+                  />
+                </div>
+                <div>
+                  <label className="text-slate-600 font-bold block mb-1">อายุ (เดือน)</label>
+                  <input
+                    type="number"
+                    value={aucAge}
+                    onChange={e => setAucAge(Number(e.target.value))}
+                    className="w-full p-2 border border-slate-300 rounded-xl outline-none font-mono"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-slate-600 font-bold block mb-1">เชิงชน / สไตล์การชน</label>
+                <input
+                  type="text"
+                  value={aucStyle}
+                  onChange={e => setAucStyle(e.target.value)}
+                  placeholder="เช่น ม้าล่อสปีดรวดเร็ว แข้งหน้าถี่จัด"
+                  className="w-full p-2 border border-slate-300 rounded-xl outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 bg-rose-50/60 p-3 rounded-2xl border border-rose-200">
+                <div>
+                  <label className="text-rose-950 font-bold block mb-1">ราคาเริ่มต้นประมูล (฿) *</label>
+                  <input
+                    type="number"
+                    required
+                    step="500"
+                    value={aucStartPrice}
+                    onChange={e => setAucStartPrice(Number(e.target.value))}
+                    className="w-full p-2 border border-rose-300 rounded-xl outline-none font-mono font-black text-rose-700 bg-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-rose-950 font-bold block mb-1">เคาะขั้นต่ำครั้งละ (฿) *</label>
+                  <input
+                    type="number"
+                    required
+                    step="100"
+                    value={aucMinIncrement}
+                    onChange={e => setAucMinIncrement(Number(e.target.value))}
+                    className="w-full p-2 border border-rose-300 rounded-xl outline-none font-mono bg-white"
+                  />
+                </div>
+                <div className="col-span-2 grid grid-cols-2 gap-3 pt-1">
+                  <div>
+                    <label className="text-slate-700 font-bold block mb-1">ราคาเคาะจบซื้อทันที (Buyout) ฿</label>
+                    <input
+                      type="number"
+                      step="1000"
+                      value={aucBuyoutPrice}
+                      onChange={e => setAucBuyoutPrice(Number(e.target.value))}
+                      placeholder="เช่น 45000"
+                      className="w-full p-2 border border-slate-300 rounded-xl outline-none font-mono bg-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-slate-700 font-bold block mb-1">ระยะเวลาประมูล (ชั่วโมง)</label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="72"
+                      value={aucDurationHours}
+                      onChange={e => setAucDurationHours(Number(e.target.value))}
+                      className="w-full p-2 border border-slate-300 rounded-xl outline-none font-mono bg-white"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-slate-600 font-bold block mb-1">สรุปสายเลือด / บรรพบุรุษ</label>
+                <input
+                  type="text"
+                  value={aucPedigree}
+                  onChange={e => setAucPedigree(e.target.value)}
+                  placeholder="เช่น พ่อ: เจ้าเทาสายฟ้า / แม่: แม่ทองกวาว"
+                  className="w-full p-2 border border-slate-300 rounded-xl outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-600 font-bold block mb-1">ลิงก์รูปภาพไก่ชน (Image URL)</label>
+                <input
+                  type="url"
+                  value={aucImageUrl}
+                  onChange={e => setAucImageUrl(e.target.value)}
+                  className="w-full p-2 border border-slate-300 rounded-xl outline-none text-[11px]"
+                />
+              </div>
+
+              <div className="pt-2 flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowAddAuctionModal(false)}
+                  className="py-2 px-3 border border-slate-300 rounded-xl text-slate-600 font-bold cursor-pointer"
+                >
+                  ยกเลิก
+                </button>
+                <button
+                  type="submit"
+                  className="py-2.5 px-5 bg-rose-600 hover:bg-rose-700 text-white font-black rounded-xl shadow-md shadow-rose-600/20 cursor-pointer flex items-center gap-1.5"
+                >
+                  <Gavel className="w-4 h-4" />
+                  <span>ยืนยันเปิดประมูล</span>
                 </button>
               </div>
             </form>
