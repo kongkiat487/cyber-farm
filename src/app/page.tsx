@@ -15,6 +15,7 @@ import { NotificationsModal } from '../components/NotificationsModal';
 import { AuthModal } from '../components/AuthModal';
 import { ReceiptModal } from '../components/ReceiptModal';
 import { AuctionSection } from '../components/AuctionSection';
+import { AuctionDetailModal } from '../components/AuctionDetailModal';
 import { AdminKanban } from '../components/AdminKanban';
 import { AdminInventory } from '../components/AdminInventory';
 import { AdminAnalytics } from '../components/AdminAnalytics';
@@ -28,7 +29,7 @@ import {
   FrameStyle,
   ZoomLevel
 } from '../components/DeviceSimulatorBar';
-import { Gamecock, Order } from '../types';
+import { Gamecock, Order, AuctionItem } from '../types';
 import {
   Search,
   CheckCircle,
@@ -63,6 +64,7 @@ function FarmStoreContent() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isReceiptOpen, setIsReceiptOpen] = useState(false);
   const [receiptOrder, setReceiptOrder] = useState<Order | null>(null);
+  const [selectedAuctionForModal, setSelectedAuctionForModal] = useState<AuctionItem | null>(null);
   const [authDefaultMode, setAuthDefaultMode] = useState<'LOGIN' | 'REGISTER'>('LOGIN');
   const [recentOrderSuccess, setRecentOrderSuccess] = useState<Order | null>(null);
 
@@ -204,6 +206,7 @@ function FarmStoreContent() {
                   setAuthDefaultMode('LOGIN');
                   setIsAuthOpen(true);
                 }}
+                onViewAuctionDetails={(auc) => setSelectedAuctionForModal(auc)}
               />
             )}
 
@@ -388,6 +391,7 @@ function FarmStoreContent() {
                   setAuthDefaultMode('LOGIN');
                   setIsAuthOpen(true);
                 }}
+                onViewAuctionDetails={(auc) => setSelectedAuctionForModal(auc)}
               />
             )}
           </div>
@@ -591,6 +595,19 @@ function FarmStoreContent() {
         isOpen={isAuthOpen}
         onClose={() => setIsAuthOpen(false)}
         defaultMode={authDefaultMode}
+      />
+
+      {/* Live Auction Details & Real-time Bid Log Modal */}
+      <AuctionDetailModal
+        isOpen={!!selectedAuctionForModal}
+        onClose={() => setSelectedAuctionForModal(null)}
+        auction={selectedAuctionForModal}
+        onOpenAuth={() => {
+          setSelectedAuctionForModal(null);
+          setAuthDefaultMode('LOGIN');
+          setIsAuthOpen(true);
+        }}
+        onProceedToCheckout={() => setIsCheckoutOpen(true)}
       />
     </div>
   );

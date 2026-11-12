@@ -17,15 +17,18 @@ import {
   CheckCircle2,
   AlertCircle,
   HelpCircle,
-  Play
+  Play,
+  History,
+  Trophy
 } from 'lucide-react';
 
 interface AuctionCardProps {
   auction: AuctionItem;
   onOpenAuth: () => void;
+  onViewDetails?: (auction: AuctionItem) => void;
 }
 
-export const AuctionCard: React.FC<AuctionCardProps> = ({ auction, onOpenAuth }) => {
+export const AuctionCard: React.FC<AuctionCardProps> = ({ auction, onOpenAuth, onViewDetails }) => {
   const { role, currentMember, placeBid, buyoutAuction } = useFarm();
 
   const minRequiredBid = auction.currentBid + auction.minBidIncrement;
@@ -207,10 +210,19 @@ export const AuctionCard: React.FC<AuctionCardProps> = ({ auction, onOpenAuth })
             <div className="text-[11px] text-slate-400 text-center">ยังไม่มีผู้เคาะประมูล (เปิดราคาที่ ฿{auction.startingPrice.toLocaleString()})</div>
           )}
 
-          {/* Total bids count */}
-          <div className="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-200/60">
-            <span>ประมูลไปแล้ว: <b className="text-slate-700">{auction.bids.length}</b> ครั้ง</span>
-            <span>เพิ่มขั้นต่ำ: <b className="text-slate-700">฿{auction.minBidIncrement.toLocaleString()}</b></span>
+          {/* Total bids count & View details button */}
+          <div className="flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-200/60">
+            <span className="text-slate-500">เคาะไปแล้ว: <b className="text-slate-800">{auction.bids.length}</b> ครั้ง</span>
+            {onViewDetails && (
+              <button
+                type="button"
+                onClick={() => onViewDetails(auction)}
+                className="text-[11px] font-black text-amber-700 hover:text-amber-800 flex items-center gap-1 cursor-pointer hover:underline"
+              >
+                <History className="w-3.5 h-3.5 text-amber-600" />
+                <span>ดูประวัติการเคาะทั้งหมด</span>
+              </button>
+            )}
           </div>
         </div>
 

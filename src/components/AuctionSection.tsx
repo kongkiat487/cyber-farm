@@ -20,9 +20,10 @@ import {
 
 interface AuctionSectionProps {
   onOpenAuth: () => void;
+  onViewAuctionDetails?: (auction: any) => void;
 }
 
-export const AuctionSection: React.FC<AuctionSectionProps> = ({ onOpenAuth }) => {
+export const AuctionSection: React.FC<AuctionSectionProps> = ({ onOpenAuth, onViewAuctionDetails }) => {
   const { auctions, role, currentMember } = useFarm();
   const [filterStatus, setFilterStatus] = useState<'ALL' | 'ACTIVE' | 'ENDING_SOON'>('ALL');
 
@@ -104,6 +105,7 @@ export const AuctionSection: React.FC<AuctionSectionProps> = ({ onOpenAuth }) =>
               key={auction.id}
               auction={auction}
               onOpenAuth={onOpenAuth}
+              onViewDetails={onViewAuctionDetails}
             />
           ))}
         </div>

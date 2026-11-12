@@ -34,6 +34,7 @@ interface StoreHomeViewProps {
   onViewGamecockDetails: (gamecock: Gamecock, tab?: 'OVERVIEW' | 'PEDIGREE' | 'VIDEO') => void;
   onOpenTracking: () => void;
   onOpenAuth: () => void;
+  onViewAuctionDetails?: (auction: any) => void;
 }
 
 export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
@@ -43,7 +44,8 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
   onSelectNav,
   onViewGamecockDetails,
   onOpenTracking,
-  onOpenAuth
+  onOpenAuth,
+  onViewAuctionDetails
 }) => {
   const { auctions } = useFarm();
   // Showcase top 3 live cocks
@@ -280,6 +282,7 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
               key={auc.id}
               auction={auc}
               onOpenAuth={onOpenAuth}
+              onViewDetails={onViewAuctionDetails}
             />
           ))}
         </div>
