@@ -85,20 +85,26 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, onProce
                       <img src={item.imageUrl} alt={item.name} className="w-16 h-16 rounded-lg object-cover shrink-0" />
                       <div className="flex-1 min-w-0">
                         <h4 className="text-xs font-bold text-slate-900 truncate">{item.name}</h4>
-                        {item.isDeposit ? (
-                          <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded inline-block mt-0.5">
-                            วางมัดจำ 30% (ติดจอง)
+                        <div className="flex items-center gap-1.5 flex-wrap mt-0.5">
+                          <span className="text-[10px] text-slate-500 font-mono">
+                            ราคาเต็ม: ฿{item.price.toLocaleString()}
                           </span>
-                        ) : (
-                          <span className="text-[10px] text-slate-500 block">ชำระราคาเต็ม</span>
-                        )}
+                          {item.isDeposit && (
+                            <span className="text-[10px] font-bold text-amber-800 bg-amber-100 px-1.5 py-0.2 rounded">
+                              วางมัดจำ 30% (฿{item.depositAmount?.toLocaleString()})
+                            </span>
+                          )}
+                        </div>
                         <div className="flex items-center justify-between mt-2">
-                          <span className="text-xs font-black text-amber-600">
-                            ฿{(item.isDeposit && item.depositAmount ? item.depositAmount : item.price).toLocaleString()}
-                          </span>
+                          <div>
+                            <span className="text-[10px] text-slate-400 block leading-none">ยอดชำระตอนนี้:</span>
+                            <span className="text-xs font-black text-amber-600 font-mono">
+                              ฿{(item.isDeposit && item.depositAmount ? item.depositAmount : item.price).toLocaleString()}
+                            </span>
+                          </div>
                           <button
                             onClick={() => removeFromCart(item.id)}
-                            className="text-slate-400 hover:text-rose-600 p-1 transition-colors"
+                            className="text-slate-400 hover:text-rose-600 p-1 transition-colors cursor-pointer"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -179,9 +185,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, onProce
           <div className="p-4 sm:p-5 border-t border-slate-200 bg-slate-50 space-y-3">
             <div className="space-y-1.5 text-xs">
               <div className="flex justify-between text-slate-500">
-                <span>ราคาสินค้ารวม</span>
-                <span>฿{(liveSubtotal + parcelSubtotal).toLocaleString()}</span>
+                <span>ยอดรวมสินค้า (คำนวณตามเงื่อนไขมัดจำ 30%)</span>
+                <span className="font-mono">฿{(liveSubtotal + parcelSubtotal).toLocaleString()}</span>
               </div>
+              {liveItems.some(i => i.isDeposit) && (
+                <div className="text-[10px] text-amber-700 bg-amber-50 p-2 rounded-xl border border-amber-200 leading-relaxed">
+                  💡 <strong>ไก่ชนมีชีวิต/ประมูล:</strong> ระบบคำนวณยอดชำระมัดจำ <strong>30%</strong> เพื่อล็อกสถานะไก่และจองคิวรถตู้ติดแอร์ ส่วนที่เหลือ 70% ชำระกับคนขับในวันรับมอบ
+                </div>
+              )}
               {isMember && memberDiscount > 0 && (
                 <div className="flex justify-between text-emerald-700 bg-emerald-50 px-2 py-1 rounded-lg font-bold border border-emerald-200">
                   <span className="flex items-center gap-1">
