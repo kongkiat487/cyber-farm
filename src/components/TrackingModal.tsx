@@ -2,16 +2,22 @@
 
 import React, { useState } from 'react';
 import { useFarm } from '../context/FarmContext';
-import { X, Search, Truck, Package, Phone, CheckCircle, Clock, MapPin } from 'lucide-react';
+import { X, Search, Truck, Package, Phone, CheckCircle, Clock, MapPin, Receipt } from 'lucide-react';
 import { Order } from '../types';
 
 interface TrackingModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialOrder?: Order | null;
+  onOpenReceipt?: (order: Order) => void;
 }
 
-export const TrackingModal: React.FC<TrackingModalProps> = ({ isOpen, onClose, initialOrder }) => {
+export const TrackingModal: React.FC<TrackingModalProps> = ({
+  isOpen,
+  onClose,
+  initialOrder,
+  onOpenReceipt
+}) => {
   const { orders } = useFarm();
   const [searchQuery, setSearchQuery] = useState(initialOrder?.orderNumber || '');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(initialOrder || (orders[0] || null));
@@ -128,6 +134,19 @@ export const TrackingModal: React.FC<TrackingModalProps> = ({ isOpen, onClose, i
                     </span>
                   </div>
                 </div>
+
+                {/* Open Receipt Button Shortcut */}
+                {onOpenReceipt && (
+                  <div className="pt-2 border-t border-slate-200/80 flex justify-end">
+                    <button
+                      onClick={() => onOpenReceipt(selectedOrder)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400 text-amber-900 font-black rounded-xl text-xs transition-colors cursor-pointer"
+                    >
+                      <Receipt className="w-3.5 h-3.5 text-amber-600" />
+                      <span>เปิดดู / พิมพ์ใบเสร็จคำสั่งซื้อ</span>
+                    </button>
+                  </div>
+                )}
 
                 <div className="grid grid-cols-2 gap-2 text-xs text-slate-600 pt-2 border-t border-slate-200">
                   <div>ผู้สั่งซื้อ: <span className="font-bold text-slate-800">{selectedOrder.customerName}</span></div>

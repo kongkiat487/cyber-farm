@@ -13,6 +13,7 @@ import { CheckoutModal } from '../components/CheckoutModal';
 import { TrackingModal } from '../components/TrackingModal';
 import { NotificationsModal } from '../components/NotificationsModal';
 import { AuthModal } from '../components/AuthModal';
+import { ReceiptModal } from '../components/ReceiptModal';
 import { AuctionSection } from '../components/AuctionSection';
 import { AdminKanban } from '../components/AdminKanban';
 import { AdminInventory } from '../components/AdminInventory';
@@ -33,7 +34,8 @@ import {
   CheckCircle,
   Sparkles,
   ArrowRight,
-  Smartphone
+  Smartphone,
+  Receipt
 } from 'lucide-react';
 
 function FarmStoreContent() {
@@ -59,6 +61,8 @@ function FarmStoreContent() {
   const [isTrackingOpen, setIsTrackingOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isReceiptOpen, setIsReceiptOpen] = useState(false);
+  const [receiptOrder, setReceiptOrder] = useState<Order | null>(null);
   const [authDefaultMode, setAuthDefaultMode] = useState<'LOGIN' | 'REGISTER'>('LOGIN');
   const [recentOrderSuccess, setRecentOrderSuccess] = useState<Order | null>(null);
 
@@ -103,7 +107,8 @@ function FarmStoreContent() {
 
   const handleOrderSuccess = (order: Order) => {
     setRecentOrderSuccess(order);
-    setIsTrackingOpen(true);
+    setReceiptOrder(order);
+    setIsReceiptOpen(true); // Automatically pop up the receipt for the customer upon purchase
   };
 
   const handleSelectSystem = (system: 'WEB' | 'MOBILE' | 'BACKOFFICE' | 'TRACKING') => {
@@ -133,6 +138,10 @@ function FarmStoreContent() {
         onOpenCart={() => setIsCartOpen(true)}
         onOpenNotifications={() => setIsNotifOpen(true)}
         onOpenTracking={() => setIsTrackingOpen(true)}
+        onOpenReceipt={() => {
+          setReceiptOrder(recentOrderSuccess || null);
+          setIsReceiptOpen(true);
+        }}
         onOpenAuth={(m) => {
           setAuthDefaultMode(m || 'LOGIN');
           setIsAuthOpen(true);
@@ -155,12 +164,24 @@ function FarmStoreContent() {
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setIsTrackingOpen(true)}
-              className="py-1 px-2.5 sm:py-1.5 sm:px-3 bg-white text-emerald-800 rounded-xl text-[11px] sm:text-xs font-bold hover:bg-emerald-50 transition-colors shrink-0"
-            >
-              ดูสถานะ
-            </button>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => {
+                  setReceiptOrder(recentOrderSuccess);
+                  setIsReceiptOpen(true);
+                }}
+                className="py-1 px-2.5 sm:py-1.5 sm:px-3 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl text-[11px] sm:text-xs font-black transition-colors flex items-center gap-1 shadow-xs cursor-pointer"
+              >
+                <Receipt className="w-3.5 h-3.5" />
+                <span>ดูใบเสร็จ</span>
+              </button>
+              <button
+                onClick={() => setIsTrackingOpen(true)}
+                className="py-1 px-2.5 sm:py-1.5 sm:px-3 bg-white text-emerald-800 rounded-xl text-[11px] sm:text-xs font-bold hover:bg-emerald-50 transition-colors"
+              >
+                ดูสถานะจัดส่ง
+              </button>
+            </div>
           </div>
         )}
 
@@ -543,6 +564,21 @@ function FarmStoreContent() {
         isOpen={isTrackingOpen}
         onClose={() => setIsTrackingOpen(false)}
         initialOrder={recentOrderSuccess}
+        onOpenReceipt={(order) => {
+          setReceiptOrder(order);
+          setIsReceiptOpen(true);
+        }}
+      />
+
+      {/* Order Electronic Receipt Modal (ใบเสร็จรับเงิน/คำสั่งซื้อ) */}
+      <ReceiptModal
+        isOpen={isReceiptOpen}
+        onClose={() => setIsReceiptOpen(false)}
+        order={receiptOrder || recentOrderSuccess || null}
+        onOpenTracking={() => {
+          setIsReceiptOpen(false);
+          setIsTrackingOpen(true);
+        }}
       />
 
       <NotificationsModal

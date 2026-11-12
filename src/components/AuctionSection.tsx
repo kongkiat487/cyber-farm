@@ -111,3 +111,4 @@ export const AuctionSection: React.FC<AuctionSectionProps> = ({ onOpenAuth }) =>
     </div>
   );
 };
+

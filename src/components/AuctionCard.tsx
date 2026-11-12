@@ -311,3 +311,4 @@ export const AuctionCard: React.FC<AuctionCardProps> = ({ auction, onOpenAuth })
     </div>
   );
 };
+

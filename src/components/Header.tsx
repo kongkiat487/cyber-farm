@@ -13,13 +13,15 @@ import {
   User,
   Star,
   LogOut,
-  Sparkles
+  Sparkles,
+  Receipt
 } from 'lucide-react';
 
 interface HeaderProps {
   onOpenCart: () => void;
   onOpenNotifications: () => void;
   onOpenTracking: () => void;
+  onOpenReceipt?: () => void;
   onOpenAuth?: (mode?: 'LOGIN' | 'REGISTER') => void;
   activeNav: string;
   onSelectNav: (nav: string) => void;
@@ -29,6 +31,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCart,
   onOpenNotifications,
   onOpenTracking,
+  onOpenReceipt,
   onOpenAuth,
   activeNav,
   onSelectNav
@@ -258,6 +261,18 @@ export const Header: React.FC<HeaderProps> = ({
               <span>เข้าสู่ระบบ / สมาชิก</span>
             </button>
           ) : null}
+
+          {/* Receipt Shortcut button */}
+          {onOpenReceipt && (
+            <button
+              onClick={onOpenReceipt}
+              className="flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-bold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition-colors cursor-pointer"
+              title="ดูใบเสร็จรับเงินล่าสุด"
+            >
+              <Receipt className="w-4 h-4 text-amber-600" />
+              <span>ใบเสร็จ</span>
+            </button>
+          )}
 
           {/* Tracking button */}
           <button
