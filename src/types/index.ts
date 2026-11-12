@@ -153,7 +153,46 @@ export interface AppNotification {
   title: string;
   message: string;
   time: string;
-  type: 'ORDER' | 'STOCK' | 'LOGISTICS' | 'PAYMENT';
+  type: 'ORDER' | 'STOCK' | 'LOGISTICS' | 'PAYMENT' | 'AUCTION';
   read: boolean;
+}
+
+export interface AuctionBid {
+  id: string;
+  bidderName: string;
+  bidderPhone: string;
+  bidderFarm?: string;
+  bidderTier?: string;
+  amount: number;
+  time: string;
+  isAutoBid?: boolean;
+}
+
+export interface AuctionItem {
+  id: string;
+  title: string;
+  code: string;
+  breed: string;
+  fightingStyle: string;
+  weightKg: number;
+  ageMonths: number;
+  imageUrl: string;
+  videoUrl?: string;
+  startingPrice: number;
+  currentBid: number;
+  minBidIncrement: number;
+  reservePrice?: number;
+  buyoutPrice?: number; // ราคาเคาะจบซื้อทันที
+  startTime: string;
+  endTime: string; // ISO string
+  status: 'UPCOMING' | 'ACTIVE' | 'ENDED';
+  bids: AuctionBid[];
+  highestBidder?: {
+    name: string;
+    phone: string;
+    farm?: string;
+  };
+  description: string;
+  pedigreeSummary?: string;
 }
 

@@ -2,9 +2,11 @@
 
 import React from 'react';
 import { Gamecock, FertilizedEgg, SupplyEquipment } from '../types';
+import { useFarm } from '../context/FarmContext';
 import { GamecockCard } from './GamecockCard';
 import { FertilizedEggCard } from './FertilizedEggCard';
 import { SupplyCard } from './SupplyCard';
+import { AuctionCard } from './AuctionCard';
 import {
   Sparkles,
   ArrowRight,
@@ -19,7 +21,9 @@ import {
   CheckCircle2,
   TrendingUp,
   Package,
-  HeartHandshake
+  HeartHandshake,
+  Flame,
+  Gavel
 } from 'lucide-react';
 
 interface StoreHomeViewProps {
@@ -29,6 +33,7 @@ interface StoreHomeViewProps {
   onSelectNav: (nav: string) => void;
   onViewGamecockDetails: (gamecock: Gamecock, tab?: 'OVERVIEW' | 'PEDIGREE' | 'VIDEO') => void;
   onOpenTracking: () => void;
+  onOpenAuth: () => void;
 }
 
 export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
@@ -37,14 +42,18 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
   equipment,
   onSelectNav,
   onViewGamecockDetails,
-  onOpenTracking
+  onOpenTracking,
+  onOpenAuth
 }) => {
+  const { auctions } = useFarm();
   // Showcase top 3 live cocks
   const featuredCocks = gamecocks.slice(0, 3);
   // Showcase top 2 egg pairs
   const featuredEggs = eggs.slice(0, 2);
   // Showcase top 3 equipment items
   const featuredSupplies = equipment.slice(0, 3);
+  // Showcase top 2 live auctions
+  const featuredAuctions = auctions.slice(0, 2);
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-300">
@@ -81,6 +90,13 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
               จองไข่เชื้อเงินล้าน
             </button>
             <button
+              onClick={() => onSelectNav('AUCTION')}
+              className="py-2 px-4 bg-rose-600 hover:bg-rose-500 text-white font-black rounded-xl text-xs sm:text-sm shadow-md shadow-rose-600/30 transition-all hover:scale-105 cursor-pointer flex items-center gap-1.5"
+            >
+              <span className="w-2 h-2 rounded-full bg-white animate-ping" />
+              <span>ห้องประมูล (Member)</span>
+            </button>
+            <button
               onClick={() => onSelectNav('SUPPLIES')}
               className="py-2 px-3.5 bg-white/10 hover:bg-white/20 text-slate-200 font-semibold rounded-xl text-xs sm:text-sm transition-all cursor-pointer hidden sm:flex items-center gap-1.5"
             >
@@ -105,7 +121,7 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
           <span className="text-[11px] text-slate-400">เลือกดูสินค้าตามประเภท</span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-6 gap-2.5 sm:gap-3">
           {/* Card 1: Live Cocks */}
           <div
             onClick={() => onSelectNav('LIVE_COCKS')}
@@ -148,7 +164,28 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
             </div>
           </div>
 
-          {/* Card 3: Supplies */}
+          {/* Card 3: Live Auction (NEW) */}
+          <div
+            onClick={() => onSelectNav('AUCTION')}
+            className="group bg-gradient-to-br from-rose-50 to-amber-50 p-3 sm:p-3.5 rounded-2xl border border-rose-300 hover:border-rose-500 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between ring-1 ring-rose-200"
+          >
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-2xl sm:text-3xl group-hover:scale-110 transition-transform">🔨</span>
+              <span className="text-[10px] font-black bg-rose-600 text-white px-2 py-0.5 rounded-full shadow-xs animate-pulse">
+                Member สด
+              </span>
+            </div>
+            <div>
+              <h4 className="font-black text-xs sm:text-sm text-rose-700 group-hover:text-rose-800 transition-colors">
+                ห้องประมูลไก่
+              </h4>
+              <p className="text-[10px] sm:text-[11px] text-rose-600/90 mt-0.5 line-clamp-1 font-semibold">
+                เฉพาะสมาชิกฟาร์ม
+              </p>
+            </div>
+          </div>
+
+          {/* Card 4: Supplies */}
           <div
             onClick={() => onSelectNav('SUPPLIES')}
             className="group bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
@@ -169,7 +206,7 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
             </div>
           </div>
 
-          {/* Card 4: Pedigree Tree Shortcut */}
+          {/* Card 5: Pedigree Tree Shortcut */}
           <div
             onClick={() => gamecocks[0] && onViewGamecockDetails(gamecocks[0], 'PEDIGREE')}
             className="group bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between ring-1 ring-amber-300/40"
@@ -190,7 +227,7 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
             </div>
           </div>
 
-          {/* Card 5: Van Tracking */}
+          {/* Card 6: Van Tracking */}
           <div
             onClick={onOpenTracking}
             className="group bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
@@ -212,6 +249,41 @@ export const StoreHomeView: React.FC<StoreHomeViewProps> = ({
           </div>
         </div>
       </div>
+
+      {/* 2.5 Live Auction Spotlight for Members */}
+      <section className="bg-gradient-to-r from-rose-950 via-slate-900 to-amber-950 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-rose-900/50 shadow-lg text-white space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-white/10">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping" />
+              <h3 className="text-sm sm:text-base font-black text-white flex items-center gap-1.5">
+                <Gavel className="w-4 h-4 text-rose-400" /> ห้องประมูลสดออนไลน์ (Live Auction - สิทธิ์เฉพาะ Member)
+              </h3>
+            </div>
+            <p className="text-[11px] text-slate-300 mt-0.5">
+              เปิดเคาะประมูลสายพันธุ์ระดับท็อปฟาร์ม ผู้ใช้ทั่วไปดูได้แต่ต้องเป็น Member ถึงจะร่วมเคาะได้
+            </p>
+          </div>
+
+          <button
+            onClick={() => onSelectNav('AUCTION')}
+            className="flex items-center gap-1.5 text-xs font-black text-rose-300 hover:text-white bg-rose-600/30 hover:bg-rose-600/50 border border-rose-500/40 px-3 py-1.5 rounded-xl transition-all cursor-pointer w-fit"
+          >
+            <span>เข้าสู่ห้องประมูลเต็มรูปแบบ</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {featuredAuctions.map(auc => (
+            <AuctionCard
+              key={auc.id}
+              auction={auc}
+              onOpenAuth={onOpenAuth}
+            />
+          ))}
+        </div>
+      </section>
 
       {/* 3. Section: Featured Live Gamecocks */}
       <section className="space-y-3">

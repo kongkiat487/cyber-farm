@@ -1,4 +1,4 @@
-import { Gamecock, FertilizedEgg, SupplyEquipment, Order, AppNotification } from '../types';
+import { Gamecock, FertilizedEgg, SupplyEquipment, Order, AppNotification, AuctionItem } from '../types';
 
 export const INITIAL_GAMECOCKS: Gamecock[] = [
   {
@@ -594,5 +594,130 @@ export const INITIAL_NOTIFICATIONS: AppNotification[] = [
     time: '2 ชั่วโมงที่แล้ว',
     type: 'LOGISTICS',
     read: true
+  }
+];
+
+export const INITIAL_AUCTIONS: AuctionItem[] = [
+  {
+    id: 'auc-01',
+    code: 'AUC-901',
+    title: 'เจ้าเพชรสายฟ้า (ยอดไก่หนุ่มเกรด VIP)',
+    breed: 'พม่าม้าล่อรำวง + กวนอู',
+    fightingStyle: 'ม้าล่อสปีดรวดเร็ว วิ่งยาวแล้วกลับมาสาดแข้งหน้า ปากไวเดือยแทงเข้าข้อต่อ',
+    weightKg: 2.75,
+    ageMonths: 9,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Gamecock.jpg',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    startingPrice: 15000,
+    currentBid: 28000,
+    minBidIncrement: 1000,
+    reservePrice: 25000,
+    buyoutPrice: 55000,
+    startTime: '2026-11-12T08:00:00Z',
+    endTime: new Date(Date.now() + 4 * 3600 * 1000 + 15 * 60 * 1000).toISOString(), // 4 hrs 15 mins from now
+    status: 'ACTIVE',
+    bids: [
+      {
+        id: 'bid-1',
+        bidderName: 'เสี่ยเบิร์ด อยุธยา',
+        bidderPhone: '089-xxx-1234',
+        bidderFarm: 'ซุ้มเพชรนำโชค',
+        bidderTier: 'VIP',
+        amount: 18000,
+        time: '11:20 น.'
+      },
+      {
+        id: 'bid-2',
+        bidderName: 'นายกตุ้ม เมืองชล',
+        bidderPhone: '081-xxx-8899',
+        bidderFarm: 'ซุ้มเก้าเจริญ',
+        bidderTier: 'GOLD',
+        amount: 22000,
+        time: '12:05 น.'
+      },
+      {
+        id: 'bid-3',
+        bidderName: 'เสี่ยเอก สุพรรณ',
+        bidderPhone: '086-xxx-4455',
+        bidderFarm: 'ซุ้มสิงห์สยาม',
+        bidderTier: 'VIP',
+        amount: 28000,
+        time: '13:10 น.'
+      }
+    ],
+    highestBidder: {
+      name: 'เสี่ยเอก สุพรรณ',
+      phone: '086-xxx-4455',
+      farm: 'ซุ้มสิงห์สยาม'
+    },
+    description: 'ไก่หนุ่มคัดเกรดเปิดราคาพิเศษเฉพาะสมาชิกฟาร์ม เบอร์แข้งคมกริบ ขยับเป็นแทง โครงสร้างกระดูกเต็มร้อย พร้อมคลิปซ้อมเตะเป้าสด',
+    pedigreeSummary: 'พ่อ: เจ้าเทาสายฟ้า (ชนะ 4 ไฟต์ 1.8M) / แม่: แม่ทองกวาว (สายเลือดโกวเซ้ม)'
+  },
+  {
+    id: 'auc-02',
+    code: 'AUC-902',
+    title: 'เจ้าขุนศึกป่าก๋อย (จอมกัดทุบหลังเงินล้าน)',
+    breed: 'ป่าก๋อยร้อยสายกัดหลัง',
+    fightingStyle: 'เดินชนบุกเข้าข้อ บี้คอกระชากตี ทุบหลังรุนแรงจนคู่ต่อสู้อ่อนกำลัง',
+    weightKg: 2.9,
+    ageMonths: 11,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Pumpkin_Hulsey_Gamefowl_2.jpg',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    startingPrice: 20000,
+    currentBid: 35000,
+    minBidIncrement: 1000,
+    reservePrice: 30000,
+    buyoutPrice: 65000,
+    startTime: '2026-11-12T09:00:00Z',
+    endTime: new Date(Date.now() + 1 * 3600 * 1000 + 40 * 60 * 1000).toISOString(), // 1 hr 40 mins
+    status: 'ACTIVE',
+    bids: [
+      {
+        id: 'bid-201',
+        bidderName: 'กำนันเด่น นครปฐม',
+        bidderPhone: '082-xxx-7788',
+        bidderFarm: 'ซุ้มเด่นชัยพัฒนา',
+        bidderTier: 'SILVER',
+        amount: 25000,
+        time: '10:15 น.'
+      },
+      {
+        id: 'bid-202',
+        bidderName: 'ผู้ใหญ่ชาญ ชัยนาท',
+        bidderPhone: '085-xxx-3322',
+        bidderFarm: 'ซุ้มพญาไก่แก้ว',
+        bidderTier: 'VIP',
+        amount: 35000,
+        time: '12:45 น.'
+      }
+    ],
+    highestBidder: {
+      name: 'ผู้ใหญ่ชาญ ชัยนาท',
+      phone: '085-xxx-3322',
+      farm: 'ซุ้มพญาไก่แก้ว'
+    },
+    description: 'ทายาทสายพันธุ์แชมป์ระดับประเทศ สไตล์กัดทุบหัวกระเพาะและทุบหลัง ชนะสนามชมรม 2 ไฟต์รวดสภาพสวยสมบูรณ์ 100%',
+    pedigreeSummary: 'พ่อ: เจ้ารถถังเพชฌฆาต / แม่: แม่ด่างเมืองเหนือ'
+  },
+  {
+    id: 'auc-03',
+    code: 'AUC-903',
+    title: 'เจ้ามังกรขาวเชิงตราด (กระดูกเหล็ก เชิงบนสมบูรณ์แบบ)',
+    breed: 'เชิงไทยตราดแท้ 100%',
+    fightingStyle: 'กอดบน มัดคอ ขี่บน ปากเร็ว ตีซอกย้ำแผลเดิม',
+    weightKg: 2.85,
+    ageMonths: 10,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Shamo_chicken.jpg',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    startingPrice: 12000,
+    currentBid: 12000,
+    minBidIncrement: 500,
+    buyoutPrice: 40000,
+    startTime: '2026-11-12T12:00:00Z',
+    endTime: new Date(Date.now() + 8 * 3600 * 1000).toISOString(),
+    status: 'ACTIVE',
+    bids: [],
+    description: 'เปิดประมูลราคาเริ่มต้นพิเศษ สายเชิงตราดเนื้อเหนียว กระดูกหนา ทนทานแผล ลีลาบนเนียนตา',
+    pedigreeSummary: 'พ่อ: เจ้าอินทรีขาว (แชมป์ภาคตะวันออก) / แม่: แม่ทองหยิบ'
   }
 ];

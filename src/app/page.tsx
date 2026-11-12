@@ -13,6 +13,7 @@ import { CheckoutModal } from '../components/CheckoutModal';
 import { TrackingModal } from '../components/TrackingModal';
 import { NotificationsModal } from '../components/NotificationsModal';
 import { AuthModal } from '../components/AuthModal';
+import { AuctionSection } from '../components/AuctionSection';
 import { AdminKanban } from '../components/AdminKanban';
 import { AdminInventory } from '../components/AdminInventory';
 import { AdminAnalytics } from '../components/AdminAnalytics';
@@ -178,6 +179,10 @@ function FarmStoreContent() {
                   setDetailModalTab(tab || 'OVERVIEW');
                 }}
                 onOpenTracking={() => setIsTrackingOpen(true)}
+                onOpenAuth={() => {
+                  setAuthDefaultMode('LOGIN');
+                  setIsAuthOpen(true);
+                }}
               />
             )}
 
@@ -196,6 +201,7 @@ function FarmStoreContent() {
                     {activeNav === 'LIVE_COCKS' && '🐓 ไก่ชนมีชีวิต'}
                     {activeNav === 'EGGS' && '🥚 ไข่เชื้อพร้อมเพาะ'}
                     {activeNav === 'SUPPLIES' && '💊 อุปกรณ์ & เวชภัณฑ์'}
+                    {activeNav === 'AUCTION' && '🔨 ห้องประมูลสด (Member Only)'}
                   </span>
                 </div>
               </div>
@@ -352,6 +358,16 @@ function FarmStoreContent() {
                   ))}
                 </div>
               </div>
+            )}
+
+            {/* TAB 4: Live Auction (Member Only) */}
+            {activeNav === 'AUCTION' && (
+              <AuctionSection
+                onOpenAuth={() => {
+                  setAuthDefaultMode('LOGIN');
+                  setIsAuthOpen(true);
+                }}
+              />
             )}
           </div>
         )}

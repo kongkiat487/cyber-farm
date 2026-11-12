@@ -12,7 +12,8 @@ import {
   LayoutDashboard,
   ClipboardList,
   BarChart3,
-  Bell
+  Bell,
+  Gavel
 } from 'lucide-react';
 
 interface MobileBottomNavProps {
@@ -36,7 +37,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] px-2 py-1.5 pb-safe">
       {role !== 'ADMIN' ? (
-        <div className="grid grid-cols-5 gap-1 items-center">
+        <div className="grid grid-cols-6 gap-1 items-center">
           {/* 1. Home / Overview */}
           <button
             onClick={() => onSelectNav('HOME')}
@@ -46,8 +47,8 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
-            <Home className={`w-5 h-5 transition-transform ${activeNav === 'HOME' ? 'scale-110 text-amber-600 stroke-[2.5]' : 'text-slate-500'}`} />
-            <span className="text-[10px] tracking-tight mt-0.5 font-bold">หน้าแรก</span>
+            <Home className={`w-4 h-4 transition-transform ${activeNav === 'HOME' ? 'scale-110 text-amber-600 stroke-[2.5]' : 'text-slate-500'}`} />
+            <span className="text-[9px] tracking-tight mt-0.5 font-bold">หน้าแรก</span>
           </button>
 
           {/* 2. Live Gamecocks */}
@@ -59,10 +60,10 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
-            <span className={`text-lg transition-transform ${activeNav === 'LIVE_COCKS' ? 'scale-115' : ''}`}>
+            <span className={`text-base transition-transform ${activeNav === 'LIVE_COCKS' ? 'scale-115' : ''}`}>
               🐓
             </span>
-            <span className="text-[10px] tracking-tight mt-0.5">ไก่ชน</span>
+            <span className="text-[9px] tracking-tight mt-0.5">ไก่ชน</span>
           </button>
 
           {/* 3. Fertilized Eggs */}
@@ -74,10 +75,10 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
-            <span className={`text-lg transition-transform ${activeNav === 'EGGS' ? 'scale-115' : ''}`}>
+            <span className={`text-base transition-transform ${activeNav === 'EGGS' ? 'scale-115' : ''}`}>
               🥚
             </span>
-            <span className="text-[10px] tracking-tight mt-0.5">ไข่เชื้อ</span>
+            <span className="text-[9px] tracking-tight mt-0.5">ไข่เชื้อ</span>
           </button>
 
           {/* 4. Supplies & Equipment */}
@@ -89,24 +90,40 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
-            <Package className={`w-5 h-5 ${activeNav === 'SUPPLIES' ? 'text-amber-600 stroke-[2.5]' : 'text-slate-500'}`} />
-            <span className="text-[10px] tracking-tight mt-0.5">อุปกรณ์</span>
+            <Package className={`w-4 h-4 ${activeNav === 'SUPPLIES' ? 'text-amber-600 stroke-[2.5]' : 'text-slate-500'}`} />
+            <span className="text-[9px] tracking-tight mt-0.5">อุปกรณ์</span>
           </button>
 
-          {/* 5. Cart with badge */}
+          {/* 5. Live Auction (Member) */}
+          <button
+            onClick={() => onSelectNav('AUCTION')}
+            className={`relative flex flex-col items-center justify-center py-1 rounded-xl transition-all cursor-pointer ${
+              activeNav === 'AUCTION'
+                ? 'text-rose-600 font-black'
+                : 'text-rose-600/80 hover:text-rose-700'
+            }`}
+          >
+            <div className="relative">
+              <Gavel className={`w-4 h-4 ${activeNav === 'AUCTION' ? 'text-rose-600 stroke-[2.5]' : 'text-rose-600'}`} />
+              <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-rose-500 animate-ping" />
+            </div>
+            <span className="text-[9px] tracking-tight mt-0.5 font-bold">ประมูล</span>
+          </button>
+
+          {/* 6. Cart with badge */}
           <button
             onClick={onOpenCart}
             className="relative flex flex-col items-center justify-center py-1 text-slate-500 hover:text-slate-800 transition-all cursor-pointer"
           >
             <div className="relative">
-              <ShoppingCart className="w-5 h-5 text-amber-600" />
+              <ShoppingCart className="w-4 h-4 text-amber-600" />
               {totalCartCount > 0 && (
-                <span className="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 rounded-full bg-rose-500 text-white text-[9px] font-black flex items-center justify-center animate-pulse">
+                <span className="absolute -top-1.5 -right-2 min-w-3.5 h-3.5 px-0.5 rounded-full bg-rose-500 text-white text-[8px] font-black flex items-center justify-center animate-pulse">
                   {totalCartCount}
                 </span>
               )}
             </div>
-            <span className="text-[10px] tracking-tight text-amber-700 font-bold mt-0.5">ตะกร้า</span>
+            <span className="text-[9px] tracking-tight text-amber-700 font-bold mt-0.5">ตะกร้า</span>
           </button>
         </div>
       ) : (

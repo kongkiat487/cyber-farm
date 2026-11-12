@@ -13,14 +13,17 @@ import {
   EggPriceTier,
   GamecockStatus,
   UserRole,
-  MemberProfile
+  MemberProfile,
+  AuctionItem,
+  AuctionBid
 } from '../types';
 import {
   INITIAL_GAMECOCKS,
   INITIAL_EGGS,
   INITIAL_EQUIPMENT,
   INITIAL_ORDERS,
-  INITIAL_NOTIFICATIONS
+  INITIAL_NOTIFICATIONS,
+  INITIAL_AUCTIONS
 } from '../data/mockData';
 
 interface FarmContextType {
@@ -35,6 +38,9 @@ interface FarmContextType {
   equipment: SupplyEquipment[];
   orders: Order[];
   notifications: AppNotification[];
+  auctions: AuctionItem[];
+  placeBid: (auctionId: string, amount: number) => { success: boolean; message: string };
+  buyoutAuction: (auctionId: string) => { success: boolean; message: string };
   cart: CartItem[];
   addToCart: (item: Omit<CartItem, 'id'>) => void;
   removeFromCart: (cartItemId: string) => void;
@@ -71,6 +77,7 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [equipment, setEquipment] = useState<SupplyEquipment[]>(INITIAL_EQUIPMENT);
   const [orders, setOrders] = useState<Order[]>(INITIAL_ORDERS);
   const [notifications, setNotifications] = useState<AppNotification[]>(INITIAL_NOTIFICATIONS);
+  const [auctions, setAuctions] = useState<AuctionItem[]>(INITIAL_AUCTIONS);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCockForModal, setSelectedCockForModal] = useState<Gamecock | null>(null);
 
@@ -170,6 +177,126 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch {
       // ignore
     }
+  };
+
+  const placeBid = (auctionId: string, amount: number): { success: boolean; message: string } => {
+    if (role !== 'MEMBER' || !currentMember) {
+      return {
+        success: false,
+        message: 'สงวนสิทธิ์เฉพาะสมาชิก (Member) เท่านั้นที่สามารถเข้าร่วมการประมูลได้ กรุณาเข้าสู่ระบบหรือสมัครสมาชิกก่อน'
+      };
+    }
+
+    const auction = auctions.find(a => a.id === auctionId);
+    if (!auction) {
+      return { success: false, message: 'ไม่พบรายการประมูลนี้' };
+    }
+
+    if (auction.status !== 'ACTIVE') {
+      return { success: false, message: 'การประมูลนี้สิ้นสุดลงแล้ว' };
+    }
+
+    const minRequired = auction.currentBid + auction.minBidIncrement;
+    if (amount < minRequired) {
+      return {
+        success: false,
+        message: `ยอดประมูลต้องไม่ต่ำกว่า ฿${minRequired.toLocaleString()} (เพิ่มขึ้นขั้นต่ำครั้งละ ฿${auction.minBidIncrement.toLocaleString()})`
+      };
+    }
+
+    const newBid: AuctionBid = {
+      id: 'bid-' + Date.now(),
+      bidderName: currentMember.name,
+      bidderPhone: currentMember.phone,
+      bidderFarm: currentMember.farmName,
+      bidderTier: currentMember.memberTier,
+      amount,
+      time: new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + ' น.'
+    };
+
+    setAuctions(prev =>
+      prev.map(item => {
+        if (item.id === auctionId) {
+          return {
+            ...item,
+            currentBid: amount,
+            highestBidder: {
+              name: currentMember.name,
+              phone: currentMember.phone,
+              farm: currentMember.farmName
+            },
+            bids: [newBid, ...item.bids]
+          };
+        }
+        return item;
+      })
+    );
+
+    // Add in-app notification
+    const newNotif: AppNotification = {
+      id: 'notif-auc-' + Date.now(),
+      title: 'เคาะประมูลสำเร็จ!',
+      message: `คุณเสนอราคา ฿${amount.toLocaleString()} ในรายการ "${auction.title}" เป็นผู้เสนอราคาสูงสุดในขณะนี้`,
+      time: 'เมื่อสักครู่',
+      type: 'AUCTION',
+      read: false
+    };
+    setNotifications(prev => [newNotif, ...prev]);
+
+    return {
+      success: true,
+      message: `เคาะประมูลสำเร็จที่ ฿${amount.toLocaleString()}!`
+    };
+  };
+
+  const buyoutAuction = (auctionId: string): { success: boolean; message: string } => {
+    if (role !== 'MEMBER' || !currentMember) {
+      return {
+        success: false,
+        message: 'สงวนสิทธิ์เฉพาะสมาชิก (Member) เท่านั้นที่สามารถเคาะจบซื้อทันทีได้'
+      };
+    }
+
+    const auction = auctions.find(a => a.id === auctionId);
+    if (!auction || !auction.buyoutPrice) {
+      return { success: false, message: 'ไม่พบรายการหรือไม่มีราคาเคาะจบ' };
+    }
+
+    setAuctions(prev =>
+      prev.map(item => {
+        if (item.id === auctionId) {
+          return {
+            ...item,
+            currentBid: item.buyoutPrice!,
+            status: 'ENDED',
+            highestBidder: {
+              name: currentMember.name,
+              phone: currentMember.phone,
+              farm: currentMember.farmName
+            }
+          };
+        }
+        return item;
+      })
+    );
+
+    // Auto add to cart as Live Cock order
+    addToCart({
+      productId: auction.id,
+      name: `[ประมูลชนะ] ${auction.title}`,
+      code: auction.code,
+      type: 'LIVE_GAMECOCK',
+      price: auction.buyoutPrice,
+      quantity: 1,
+      imageUrl: auction.imageUrl,
+      isDeposit: true,
+      depositAmount: Math.round(auction.buyoutPrice * 0.3)
+    });
+
+    return {
+      success: true,
+      message: `ยินดีด้วย! คุณเคาะซื้อทันทีสำเร็จที่ ฿${auction.buyoutPrice.toLocaleString()} ระบบเพิ่มลงในตะกร้าสินค้าเรียบร้อยแล้ว`
+    };
   };
 
   const addToCart = (item: Omit<CartItem, 'id'>) => {
@@ -444,6 +571,7 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setEquipment(INITIAL_EQUIPMENT);
     setOrders(INITIAL_ORDERS);
     setNotifications(INITIAL_NOTIFICATIONS);
+    setAuctions(INITIAL_AUCTIONS);
     setCart([]);
     setCurrentMember(null);
     setRole('GUEST');
@@ -466,6 +594,9 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
         equipment,
         orders,
         notifications,
+        auctions,
+        placeBid,
+        buyoutAuction,
         cart,
         addToCart,
         removeFromCart,
